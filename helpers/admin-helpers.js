@@ -155,6 +155,7 @@ module.exports = {
  // dashbord mnagement  start//
  getAllLatestOrders: () => {
   return new Promise(async (resolve, reject) => {
+    
     let usersOrders = await db
       .get()
       .collection(collection.ORDER_COLLECTION)

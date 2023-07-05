@@ -9,6 +9,7 @@ const upload = multer({ dest:'public/images'});
 const path = require("path");
 const fs = require("fs");
 const userHelpers = require('../helpers/user-helpers');
+const { log } = require('handlebars/runtime');
 
 
 function adminhomepageget(req, res, next) {
@@ -616,6 +617,7 @@ salesReport =async(req,res) => {
   ])
   let sales
   let range
+  let sumTotalAmount = 0;
   if(filter == "week"){
     sales = await adminHelpers.orderLastWeek()
     // date formate //
@@ -624,6 +626,10 @@ salesReport =async(req,res) => {
       sale.date = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
     });
    // date formate //
+   sales.forEach((sale) => {
+    sumTotalAmount += sale.totalAmount;
+  });
+ 
     range = "Week"
   } else if(filter == "month"){
     sales = await adminHelpers.orderLastMonth()
@@ -633,6 +639,9 @@ salesReport =async(req,res) => {
       sale.date = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
     });
    // date formate //
+   sales.forEach((sale) => {
+    sumTotalAmount += sale.totalAmount;
+  });
     range = "Month"
   } else {
     sales = await adminHelpers.orderLastYear()
@@ -642,6 +651,9 @@ salesReport =async(req,res) => {
     sale.date = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
   });
  // date formate //
+ sales.forEach((sale) => {
+  sumTotalAmount += sale.totalAmount;
+});
     range = "Year"
   }
   
@@ -657,6 +669,7 @@ salesReport =async(req,res) => {
     paymentCounts,
     sales,
     range,
+    sumTotalAmount
  
 });
 }
@@ -676,6 +689,7 @@ salesReports= async (req,res)=>{
     let endDate = req.body.endDate
     startDate = new Date(startDate);
     endDate = new Date(endDate)
+    let sumTotalAmount = 0;
     let sales = await adminHelpers.orderInDate(startDate,endDate)
        // date formate //
        sales.forEach((sale) => {
@@ -683,8 +697,10 @@ salesReports= async (req,res)=>{
         sale.date = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
       });
      // date formate //
-   
-    res.render("admin/salesreport", { admin: true,sales});
+     sales.forEach((sale)=>{
+      sumTotalAmount += sale.totalAmount
+     })
+    res.render("admin/salesreport", { admin: true,sales,sumTotalAmount});
    }
 
 // sales report end//
