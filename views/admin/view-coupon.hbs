@@ -1,0 +1,142 @@
+<style>
+  .responsive-section {
+    margin-left: 5rem;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-top: 10px;
+  }
+
+  @media (max-width: 992px) {
+    .responsive-section {
+      margin-left: 0;
+    }
+  }
+
+  .card {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+
+  .btn {
+    border-radius: 0;
+  }
+
+  .btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+
+  .btn-dark {
+    background-color: #343a40;
+    border-color: #343a40;
+  }
+
+  .table {
+    font-size: 14px;
+  }
+
+  .table thead th {
+    font-weight: bold;
+    vertical-align: middle;
+    color: #fff;
+    background-color: #343a40;
+    border-color: #343a40;
+  }
+
+  .table tbody td {
+    vertical-align: middle;
+  }
+</style>
+
+<section style="padding-top: 100px; padding-left: 50px;" class="responsive-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="text-center">Coupon Management</h4>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12 text-right">
+                <a href="/admin/add-coupon" class="btn btn-success ml-auto mr-3 mt-3">Add coupon</a>
+              </div>
+            </div>
+            <div class="table-responsive mt-4">
+              <table class="table" id="userTable">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Coupon Code</th>
+                    <th scope="col">Expiry Date</th>
+                    <th scope="col">Discount</th>
+                    <th scope="col">Min Purchase</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each response}}
+                  <tr>
+                    <th scope="row">{{this.couponCode}}</th>
+                    <td>{{this.expiryDate}}</td>
+                    <td>{{this.discount}}</td>
+                    <td>{{this.maxPurchase}}</td>
+                    <td>
+                      <a href="/admin/edit-coupon/{{this._id}}" class="btn btn-success">Edit</a>
+                      <i type="submit" class="btn btn-dark" onclick="deleteItem('{{this._id}}')">Delete</i>
+                    </td>
+                  </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+<script>
+  function deleteItem(id) {
+    // Display SweetAlert confirmation dialog
+    Swal.fire({
+      icon: 'warning',
+      title: 'Are you sure?',
+      text: 'This action cannot be undone.',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // User clicked "Yes, delete it!"
+        // Perform the deletion or make an Ajax request here
+        // Example: Delete the item using an Ajax request
+        $.ajax({
+          url: '/admin/delete-coupon',
+          type: 'POST',
+          data: { id: id },
+          success: function(response) {
+            // Handle success response
+            // Display success message or perform other actions
+            Swal.fire({
+              icon: 'success',
+              title: 'Deleted!',
+              text: 'The item has been successfully deleted.',
+              showConfirmButton: false,
+              timer: 1500
+            }).then(() => {
+              // Reload the page or perform any other actions after the alert is closed
+              location.reload(); // Example: Reload the page
+            });
+          },
+          error: function(error) {
+            // Handle error response
+            console.log(error);
+            // Display an error message or perform other error handling
+          }
+        });
+      }
+    });
+  }
+</script>
+

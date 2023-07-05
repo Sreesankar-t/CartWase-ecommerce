@@ -1,0 +1,94 @@
+<section class="vh-100" style="background-color: #eee; height:94vh;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-10">
+        <div class="card" style="border-radius: 1rem;">
+          <div class="row g-0 justify-content-center align-items-center">
+            <div class="col-md-6 col-lg-7 d-flex align-items-center">
+              <div class="card-body p-4 p-lg-5 text-black">
+                <form action="/updatePass" method="POST">
+                  <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Reset your password</h5>
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="email">Your Email</label>
+                    <input type="email" name="email" class="form-control form-control-lg" style="border-color: #231b1b;" required />
+                    <div class="invalid-feedback">
+                      Please enter a valid email address.
+                    </div>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <label for="passwordInput" class="form-label">Password</label>
+                    <input type="password" class="form-control form-control-lg" style="border-color: #231b1b;" id="passwordInput" name="newPass" onkeyup="validatePassword()">
+                    <span id="password-error"></span><br>
+                    <div class="invalid-feedback">
+                      Please enter a new password.
+                    </div>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <label class="form-label">Confirm password</label>
+                    <input id="confirm-password" type="password" class="form-control form-control-lg" style="border-color: #231b1b;" required onkeyup="validatePassword()">
+                    <div id="confirm-password-error" class="invalid-feedback">
+                      Confirm your new password.
+                    </div>
+                  </div>
+
+                  <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-success btn btn-dark btn-lg" style="width: 10rem; color: #ffff">
+                      Submit
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function validatePassword() {
+    var passwordInput = document.getElementById('passwordInput');
+    var confirmPasswordInput = document.getElementById('confirm-password');
+    var passwordError = document.getElementById('password-error');
+    var confirmPasswordError = document.getElementById('confirm-password-error');
+    var passwordValue = passwordInput.value.trim();
+    var confirmPasswordValue = confirmPasswordInput.value.trim();
+
+    // Define the regex pattern for password validation
+    var passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/;
+
+    if (passwordValue.length === 0) {
+      passwordError.innerHTML = 'Password is required.';
+      passwordInput.classList.add('is-invalid');
+      passwordInput.classList.remove('is-valid');
+      return false; // Prevent form submission
+    } else if (!passwordPattern.test(passwordValue)) {
+      passwordError.innerHTML = 'Password must contain at least one uppercase letter, one digit, one special character, and be at least 6 characters long.';
+      passwordInput.classList.add('is-invalid');
+      passwordInput.classList.remove('is-valid');
+      return false; // Prevent form submission
+    } else {
+      passwordError.innerHTML = '';
+      passwordInput.classList.remove('is-invalid');
+      passwordInput.classList.add('is-valid');
+    }
+
+    if (passwordValue !== confirmPasswordValue) {
+      confirmPasswordError.innerHTML = 'Passwords do not match. Please enter the correct password.';
+      confirmPasswordInput.classList.remove('is-valid');
+      confirmPasswordInput.classList.add('is-invalid');
+      return false; // Prevent form submission
+    } else {
+      confirmPasswordError.innerHTML = '';
+      confirmPasswordInput.classList.remove('is-invalid');
+      confirmPasswordInput.classList.add('is-valid');
+    }
+
+    return true; // Allow form submission
+  }
+</script>
+
+

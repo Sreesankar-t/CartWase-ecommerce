@@ -1,0 +1,100 @@
+
+<style>
+  .table-container {
+    margin-top: 20px; /* Adjust the margin as needed */
+}
+
+.pagination-container {
+    margin-top: 20px; /* Adjust the margin as needed */
+    display: flex;
+    justify-content: center;
+}
+   .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    .table-container {
+        max-height: 480px;
+       
+        overflow-y: auto;
+    }
+
+    @media (max-width: 576px) {
+        .table-responsive-sm {
+            display: block;
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+        }
+    }
+</style>
+<section style="padding-left: 100px;" class="container ">
+    <div class="container">
+       
+        <div style="width: 1150px;" class="card mt-4">
+    <div  class="card-body">
+        <div class="table-container table-responsive-sm">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">➩</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Updates</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each users}}
+                    <tr>
+                        <th scope="row">.</th>
+                        <td>{{this.Name}}</td>
+                        <td>{{this.Email}}</td>
+                        <td>
+                            {{#if this.isBlocked}}
+                            <a href="/admin/unblock-user/{{this._id}}" class="btn btn-primary">Unblock</a>
+                            {{else}}
+                            <a href="/admin/block-user/{{this._id}}" class="btn btn-danger" onclick="return ">Block</a>
+                            {{/if}}
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex flex-row-reverse mt-3">
+    <form class="form-inline" action="/admin/user-data" method="post">
+        <input style="width: 15rem;" class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+</div>
+               <nav aria-label="Page navigation example" class="pagination-container">
+  <ul class="pagination  justify-content-center">
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="/admin/user-data?p=1">1</a></li>
+    <li class="page-item"><a class="page-link" href="/admin/user-data?p=2">2</a></li>
+    <li class="page-item"><a class="page-link" href="/admin/user-data??p=3">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  </ul>
+</nav>
+    </div>
+      
+</section> 
+
+
+
+
+ <script>
+  $(function(){
+    $('#userTable').DataTable({
+        "dom": '<"top"i>rt<"bottom"flp><"clear">',
+    });
+  })
+</script>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Edit Product</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<body>
+  <section>
+    <div style="padding-left: 100px;" class="container mt-4">
+      <h2 class="text-center">Edit Product</h2>
+      <form id="categoryForm" action="/admin/edit-product/{{product._id}}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm() && confirmSubmit()">
+        <div class="form-group">
+          <label for="no">NO:</label>
+          <input type="text" name="No" class="form-control" value="{{product.No}}" id="no" placeholder="Enter the product no:">
+          <div class="invalid-feedback">Please enter a positive number.</div>
+        </div>
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" name="Name" class="form-control" value="{{product.Name}}" id="name" placeholder="Enter Product Name">
+          <div class="invalid-feedback">Please enter a name with a maximum of 25 characters.</div>
+        </div>
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea name="Description" class="form-control" id="description" rows="3" placeholder="Enter Description" required>{{product.Description}}</textarea>
+        </div>
+        <div class="form-group">
+          <label for="category">Category:</label>
+          <select name="Category" class="form-control" required>
+            <option value="{{product.Category}}">{{product.Category}}</option>
+            {{#each category}}
+            <option>{{this.Category}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="price">Price:</label>
+          <input type="number" name="Price" class="form-control" value="{{product.Price}}" id="price" placeholder="Enter Price">
+          <div class="invalid-feedback">Please enter a positive number.</div>
+        </div>
+        <div class="form-group">
+          <label for="image">Image:</label>
+          <div class="d-flex">
+            <img src="{{this.product.photos.[2].fileName}}" alt="" class="mr-2" style="width: 100px; height: auto;" id="imgView1">
+          <input type="file" name="Image" class="form-control-file" id="image" accept="Image/*" multiple onchange="viewImage(event)">
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </form>
+    </div>
+  </section>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/js/bootstrap.min.js"></script>
+  <script>
+    function validateForm() {
+      const noInput = document.getElementById('no');
+      const nameInput = document.getElementById('name');
+      const priceInput = document.getElementById('price');
+
+      if (parseInt(noInput.value) < 0) {
+        noInput.classList.add('is-invalid');
+        return false;
+      } else {
+        noInput.classList.remove('is-invalid');
+      }
+
+      if (nameInput.value.length > 25) {
+        nameInput.classList.add('is-invalid');
+        return false;
+      } else {
+        nameInput.classList.remove('is-invalid');
+      }
+
+      if (parseInt(priceInput.value) < 0) {
+        priceInput.classList.add('is-invalid');
+        return false;
+      } else {
+        priceInput.classList.remove('is-invalid');
+      }
+
+      return true;
+    }
+
+    function confirmSubmit() {
+      swal({
+        title: "Confirmation",
+        text: "Are you sure you want to submit the form?",
+        icon: "warning",
+        buttons: ["Cancel", "Yes"],
+        dangerMode: true,
+      }).then((confirm) => {
+        if (confirm) {
+          const form = document.getElementById('categoryForm');
+          form.submit();
+        }
+      });
+
+      return false;
+    }
+
+    function viewImage(event) {
+      const imgView1 = document.getElementById('imgView1');
+      const imgView2 = document.getElementById('imgView2');
+      const imgView3 = document.getElementById('imgView3');
+
+      if (event.target.files && event.target.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          imgView1.src = e.target.result;
+        };
+
+        reader.readAsDataURL(event.target.files[0]);
+      }
+
+      if (event.target.files && event.target.files[1]) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          imgView2.src = e.target.result;
+        };
+
+        reader.readAsDataURL(event.target.files[1]);
+      }
+
+      if (event.target.files && event.target.files[2]) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          imgView3.src = e.target.result;
+        };
+
+        reader.readAsDataURL(event.target.files[2]);
+      }
+    }
+  </script>
+</body>
+</html>
+
+   
+

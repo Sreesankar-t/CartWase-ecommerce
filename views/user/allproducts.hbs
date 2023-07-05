@@ -1,0 +1,217 @@
+<style>
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s;
+    transition: transform 0.5s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-15px);
+    /* Increase the size of the card on hover */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+  }
+
+  .btn-warning {
+    color: #212529;
+    background-color: #ffc107;
+    height: 40px;
+    border-radius: 40px;
+    border: 1px solid rgba(255, 193, 7, 0.75);
+  }
+
+  body {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+
+  body::-webkit-scrollbar {
+    width: 0.1em;
+  }
+
+  body::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+
+  /* Added styling for the sidebar */
+  .sidebar {
+    background-color: #f8f9fa;
+    padding: 20px;
+    width: 180px;
+    height: 100vh;
+    position: fixed;
+    left: rem;
+    top: 5rem;
+  }
+
+  .sidebar label {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  /* Adjusted the product list layout */
+  .product-list {
+    margin-left: 321px;
+    /* The same width as the sidebar */
+    padding: 20px;
+  }
+
+  .product-list h1 {
+    color: blue;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .product-list .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-right: -15px;
+    /* Counteract the default padding */
+  }
+
+  .product-list .col-md-4 {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  /* search css */
+  .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 35px;
+}
+
+.input {
+  max-width: 190px;
+  height: 100%;
+  outline: none;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #53535f;
+  caret-color: #f7f7f8;
+  color: #fff;
+  padding: 7px 10px;
+  border: 2px solid transparent;
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 7px;
+  margin-right: 1px;
+  transition: all .2s ease;
+}
+
+.input:hover {
+  border: 2px solid rgba(255, 255, 255, 0.16);
+}
+
+.input:focus {
+  border: 2px solid #a970ff;
+  background-color: #0e0e10;
+}
+
+.search__btn {
+  border: none;
+  cursor: pointer;
+  background-color: rgba(42, 42, 45, 1);
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+  height: 100%;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search__btn:hover {
+  background-color: rgba(54, 54, 56, 1);
+}
+
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+
+
+<section style="background-color:#f7f5f5;">
+  <div class="container-fluid mt-5" style="background-color: rgb(253, 253, 253);">
+    <div style="padding-top: 100px;" class="row">
+      <!-- Sidebar -->
+   
+<div class="container d-flex justify-content-end">
+        <div class="dropdown">
+  <button class="btn btn-outline-info dropdown-toggle" type="button" id="categoryDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Select Category
+  </button>
+  <div class="dropdown-menu" aria-labelledby="categoryDropdown">
+    <a class="dropdown-item" href="/allproducts?category=Gamming&sort=asc">Gamming (Low to High)</a>
+    <a class="dropdown-item" href="/allproducts?category=Gamming&sort=desc">Gamming (High to Low)</a>
+    <a class="dropdown-item" href="/allproducts?category=Student%20%26%20Business&sort=asc">Student & Business (Low to High)</a>
+    <a class="dropdown-item" href="/allproducts?category=Student%20%26%20Business&sort=desc">Student & Business (High to Low)</a>
+    <a class="dropdown-item" href="/allproducts?category=Ultrabook&sort=asc">Ultrabook (Low to High)</a>
+    <a class="dropdown-item" href="/allproducts?category=Ultrabook&sort=desc">Ultrabook (High to Low)</a>
+    <a class="dropdown-item" href="/allproducts?category=2%20In%201%20Laptops&sort=asc">2 In 1 Laptops (Low to High)</a>
+    <a class="dropdown-item" href="/allproducts?category=2%20In%201%20Laptops&sort=desc">2 In 1 Laptops (High to Low)</a>
+  </div>
+  </div>
+</div>
+
+       {{!-- search bar  start--}}
+<div class="d-flex justify-content-center " style="padding-left: ; width: 100%;">
+    <form class="form-inline" action="/allproducts" method="post">
+        <input style="width: 15rem" class="form-control mr-sm-2 d-inline" type="search" name="search" placeholder="" aria-label="Search">
+        <button class="btn btn-outline-info my-2 my-sm-0 d-inline" type="submit">Search</button>
+    </form>
+    <div class=" d-flex justify-content-end">
+      
+
+
+
+    </div>
+</div>
+
+{{!-- search bar end --}}
+      <div class=" container-fluid ">
+        <div class="row">
+          
+          {{#each products}}
+          {{#if this.isHide}}
+          {{else}}
+          <div class="col-md-3 p-5 pt-2 product-card d-flex justify-content-center " data-category="{{this.Category}}">
+            <div class="card " style="width: 25rem; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);">
+              <!-- Product card details -->
+              <div class="Wrapper">
+                 <a style="height: 15rem;" class="card-img-top" href="/productdetails/{{this._id}}">
+                <img src="{{this.photos.[2].fileName}}" class="card-img-top" alt="...">
+              </a>
+              </div>
+             
+              <div class="card-body">
+                <h5 class="card-title">{{this.Name}}</h5>
+                <p class="card-text">{{this.Category}}</p>
+                <p class="card-text"> <b>₹</b> {{this.Price}}/-</p>
+                <button onclick="addToCart('{{this._id}}')" class="btn btn-dark">Add to cart <i style="color: ;" class="fas fa-shopping-cart"></i></button>
+                <button type = "button"class="btn btn-outline-dark ml-2"onclick="addToWishlist('{{this._id}}')">
+              <i class = "fas fa-heart"></i>
+            </button>
+              </div>
+            </div>
+          </div>
+          {{/if}}
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div style="display: flex;  justify-content: center;">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link bg-dark text-light" href="/allproducts?p=1">1</a></li>
+        <li class="page-item"><a class="page-link bg-dark text-light" href="/allproducts?p=2">2</a></li>
+        <li class="page-item"><a class="page-link bg-dark text-light" href="/allproducts?p=3">3</a></li>
+      </ul>
+    </nav>
+  </div>
+</section>
+
+
+
+
+

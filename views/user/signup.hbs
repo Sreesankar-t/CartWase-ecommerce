@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    html, body {
+      height: 100%;
+      overflow: hidden; /* Hide the scroll bar */
+    }
+    <style>
+  .form-input {
+    width: 60%; /* Adjust the width as desired */
+  }
+  
+  .form-label {
+    width: 50%; /* Adjust the width as desired */
+    font-size: small;
+  }
+
+    
+    .card {
+      background-color: rgba(255, 255, 255, 0.5); /* Set the background color to transparent */
+      border: none; /* Remove the border */
+      border-radius: 20px; /* Add border radius */
+      backdrop-filter: blur(10px);
+      transition: transform 0.5s ease; /* Add transition */
+      height: 400px;
+      width: 530px;
+    }
+
+    .card:hover {
+      transform: translateY(-20px); /* Increase the translateY on hover */
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.4); /* Change the box shadow on hover */
+    }
+
+    .password_required {
+      display: none;
+    }
+
+    .password_required ul {
+      padding: 0;
+      margin: 0 0 15px;
+      list-style: none;
+    }
+
+    .password_required ul li {
+      margin-bottom: 8px;
+      color: red;
+      font-weight: 700;
+    }
+
+    .password_required ul li.active {
+      color: #02af02;
+    }
+
+    .input_submit {
+      cursor: pointer;
+      pointer-events: none;
+    }
+
+    .input_submit.active {
+      pointer-events: auto;
+    }
+
+    .valid {
+      border: 1px solid green;
+    }
+
+    .invalid {
+      border: 1px solid red;
+    }
+
+    /* Responsive styles for different screen sizes */
+
+    @media (max-width: 767px) {
+      /* Styles for screens up to 767px wide */
+      .card {
+        height: auto;
+        width: 90%;
+        margin: 0 auto;
+      }
+      
+      .form-outline {
+        width: 100%;
+      }
+      
+      .form-outline input {
+        width: 100%;
+      }
+    }
+
+    @media (min-width: 768px) and (max-width: 991px) {
+      /* Styles for screens between 768px and 991px wide */
+      .card {
+        height: 600px;
+        width: 70%;
+      }
+    }
+
+    @media (min-width: 992px) and (max-width: 1199px) {
+      /* Styles for screens between 992px and 1199px wide */
+      .card {
+        height: 600px;
+        width: 60%;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      /* Styles for screens larger than 1200px wide */
+      .card {
+        height: 650px;
+        width: 530px;
+        margin-top: 40px;
+        margin-left: 230px;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+  <section class="h-100 d-flex justify-content-center align-items-center" style="background-image: url('https://img.freepik.com/premium-photo/top-view-laptop-desktop-background-with-abstract-business-chart-interface-with-upward-arrow-finance-technology-network-concept-3d-rendering_670147-6734.jpg?w=2000'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-12 col-xl-11 d-flex justify-content-center  align-items-center">
+          <div class="card text-black">
+            <div class="card-body p-md-5">
+              <div class="row justify-content-center">
+                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+
+                  <p class="text-center h4 fw-bold mb-3 mx-1 mx-md-2 mt-2">Registration Form</p>
+                  {{#if loginError}}
+                  <p style="color: red;"><b>{{loginError}}</b></p>
+                  {{/if}}
+                  {{#if error}}
+                  <div class="error-message">{{{error}}}</div>
+                  {{/if}}
+                  <div class="form-container">
+                    <form class="" action="/signup" method="post">
+
+                      <div class="row justify-content-center d-flex flex-row align-items-center">
+                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                        <div class="form-outline flex-fill mb-0">
+                          <label class="form-label">Name</label>
+                          <input style="background-color:rgba(255, 255, 255, 0.5);" type="text" id="username" class="form-control form-input" placeholder="Enter your name" name="Name" required>
+                        </div>
+                      </div>
+
+                      <div class="row justify-content-center d-flex flex-row align-items-center">
+                        <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                        <div class="form-outline flex-fill mb-0">
+                          <label class="form-label">Email</label>
+                          <input style="background-color:rgba(255, 255, 255, 0.5);" type="email" id="email" class="form-control form-input" placeholder="Enter your email" name="Email" required>
+                        </div>
+                      </div>
+
+                      <div class="row justify-content-center d-flex flex-row align-items-center">
+                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                        <div class="form-outline flex-fill mb-0">
+                          <label class="form-label">Password</label>
+                          <input style="background-color:rgba(255, 255, 255, 0.5);" type="password" id="password" class="form-control form-input" placeholder="Enter your password" name="Password" onkeyup="validatePassword()" required>
+                          <span style="font-size: xx-small; color: red;" id="password-error"></span>
+                        </div>
+                      </div>
+
+                      <div class="row justify-content-center d-flex flex-row align-items-center">
+                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                        <div class="form-outline flex-fill mb-0">
+                          <label class="form-label">Confirm Password</label>
+                          <input style="background-color:rgba(255, 255, 255, 0.5);" type="password" id="confirm-password" class="form-control form-input" placeholder="Confirm your password" name="ConformPassword" onkeyup="validateConfirmPassword()" required>
+                          <span style="font-size: xx-small; color: red;" id="confirm-password-error"></span>
+                        </div>
+                      </div>
+
+                      <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4 mt-4">
+                        <button id="submit-button" type="submit" class="btn btn-success btn-md input_submit active mt-2">Submit</button>
+                      </div>
+
+                    </form>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+
+<script>
+  function validatePassword() {
+    var passwordInput = document.getElementById('password');
+    var passwordError = document.getElementById('password-error');
+    var passwordValue = passwordInput.value.trim();
+
+    // Define the regex pattern for password validation
+    var passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/;
+
+    if (passwordValue.length === 0) {
+      passwordError.innerHTML = 'Password is required.';
+      passwordInput.classList.add('is-invalid');
+      passwordInput.classList.remove('is-valid');
+      return false; // Prevent form submission
+    } else if (!passwordPattern.test(passwordValue)) {
+      passwordError.innerHTML = 'Password must contain at least one uppercase letter, one digit, one special character, and be at least 6 characters long.';
+      passwordInput.classList.add('is-invalid');
+      passwordInput.classList.remove('is-valid');
+      return false; // Prevent form submission
+    } else {
+      passwordError.innerHTML = '';
+      passwordInput.classList.add('is-valid');
+      passwordInput.classList.remove('is-invalid');
+      return true; // Allow form submission
+    }
+  }
+
+  function validateConfirmPassword() {
+    var passwordInput = document.getElementById('password');
+    var confirmPasswordInput = document.getElementById('confirm-password');
+    var confirmPasswordError = document.getElementById('confirm-password-error');
+    var passwordValue = passwordInput.value.trim();
+    var confirmPasswordValue = confirmPasswordInput.value.trim();
+
+    if (passwordValue !== confirmPasswordValue) {
+      confirmPasswordError.innerHTML = 'Passwords do not match. Please enter the correct password.';
+      confirmPasswordInput.classList.add('is-invalid');
+      confirmPasswordInput.classList.remove('is-valid');
+      return false; // Prevent form submission
+    } else {
+      confirmPasswordError.innerHTML = '';
+      confirmPasswordInput.classList.add('is-valid');
+      confirmPasswordInput.classList.remove('is-invalid');
+      return true; // Allow form submission
+    }
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,135 @@
+<style>
+  .pagination-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  height: 500px;
+  width: 1200px;
+  }
+
+  .card-body {
+    padding: 1rem;
+  }
+
+  .table-container {
+    max-height: 420px;
+    overflow-x: auto;
+  }
+
+  .ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .card {
+      height: auto;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .container {
+      padding-left: 15px;
+      padding-right: 15px;
+      width: 100%;
+    }
+  }
+</style>
+<section style=" padding-left: 100px;">
+<div style="padding-left: 50px; width: 2000px;" class="container">
+  <div class="row ">
+    <div class="col-12 text-right">
+      <a href="/admin/add-products" class="btn btn-success mt-4">Add Products</a>
+      
+    </div>
+       {{!-- search bar  start--}}
+<div class="pl-3 " style="padding-left: ; width: 100%;">
+    <form class="form-inline" action="/admin" method="post">
+        <input style="width: 15rem" class="form-control mr-sm-2 d-inline" type="search" name="search" placeholder="" aria-label="Search">
+        <button class="btn btn-outline-info my-2 my-sm-0 d-inline" type="submit">Search</button>
+    </form>
+    <div class=" d-flex justify-content-end">
+      
+
+
+
+    </div>
+</div>
+
+{{!-- search bar end --}}
+  </div>
+
+  <div class="card mt-4">
+    <div class="card-body">
+      <div class="table-container table-responsive">
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">Title</th>
+              <th scope="col">Description</th>
+              <th scope="col">Category</th>
+              <th scope="col">Price</th>
+              <th scope="col"></th>
+              <th scope="col">  Image</th>
+              <th scope="col"></th>
+              <th scope="col">Update</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each products}}
+            <tr>
+              <th scope="row">{{this.No}}</th>
+              <td>{{this.Name}}</td>
+              <td class="ellipsis">{{this.Description}}</td>
+              <td>{{this.Category}}</td>
+              <td>{{this.Price}}</td>
+              {{#each this.photos}}
+              <td><img style="max-width: 80px; height: auto;" src="{{this.fileName}}" alt=""></td>
+              {{/each}}
+              <td>
+                <a href="/admin/edit-product/{{this._id}}" class="btn btn-info">Edit</a>
+                {{#if this.isHide}}
+                <a href="/admin/unhide-product/{{this._id}}" class="btn btn-primary">Unhide</a>
+                {{else}}
+                <a href="/admin/hide-product/{{this._id}}" class="btn btn-danger" onclick="return ">Hide</a>
+                {{/if}}
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+
+  <nav aria-label="Page navigation example" class="pagination-container">
+    <ul class="pagination justify-content-center">
+    
+      <li class="page-item"><a class="page-link bg-dark text-light" href="/admin?p=1">1</a></li>
+      <li class="page-item"><a class="page-link bg-dark text-light" href="/admin?p=2">2</a></li>
+      <li class="page-item"><a class="page-link bg-dark text-light" href="/admin?p=3">3</a></li>
+  
+    </ul>
+  </nav>
+
+</div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+
+
+
+
+           

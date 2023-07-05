@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Add Category</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    .confirmation-dialog {
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      max-width: 400px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .confirmation-dialog h3 {
+      margin-bottom: 10px;
+    }
+
+    .confirmation-dialog .confirmation-buttons {
+      margin-top: 20px;
+    }
+
+    .confirmation-dialog .confirmation-buttons button {
+      margin: 0 10px;
+    }
+  </style>
+</head>
+<body>
+  <section style="padding-left: 100px;">
+    <div class="container mt-4">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="text-center">Add Category</h2>
+
+          {{#if catError}}
+          <div class="error-bar">
+            <p style="color: orangered" class="error-message"><b>{{catError}}</b></p>
+          </div>
+          <script>
+            setTimeout(function() {
+              var errorBar = document.querySelector('.error-bar');
+              if (errorBar) {
+                errorBar.style.display = 'none';
+              }
+            }, 5000);
+          </script>
+          {{/if}}
+
+          <form id="categoryForm" action="/admin/add-category" method="POST" enctype="multipart/form-data">
+            {{!-- <div  class="form-group">
+              <label for="">NO:</label>
+              <input style="width:30rem" type="text" name="No" class="form-control" id="no" placeholder="Enter the product no:">
+            </div> --}}
+            <div class="form-group">
+              <label for="">Category:</label>
+              <input style="width: 30rem;" type="text" name="Category" class="form-control" id="category" placeholder="Enter Category" required>
+            </div>
+            <div class="form-group">
+              <label for="">Image:</label>
+              <input type="file" name="Image" class="form-control-file" id="image" required>
+            </div>
+            <button type="submit" class="btn btn-success">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.getElementById('categoryForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the form from submitting normally
+
+      const category = document.getElementById('category').value; // Get the category value
+
+      showConfirmation(category)
+        .then(function(shouldRedirect) {
+          if (shouldRedirect) {
+            document.getElementById('categoryForm').submit(); // Submit the form
+          }
+        });
+    });
+
+    function showConfirmation(category) {
+      return new Promise(function(resolve) {
+        Swal.fire({
+          title: 'Confirmation',
+          text: 'Do you want to add this Category: ' + category + '?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        });
+      });
+    }
+  </script>
+</body>
+</html>
+
+

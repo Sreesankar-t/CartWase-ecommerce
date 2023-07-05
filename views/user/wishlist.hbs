@@ -1,0 +1,145 @@
+{{#if emptyError}}
+
+<style>
+    .gradient-custom {
+        /* fallback for old browsers */
+        background: rgba(21, 21, 21, 1);
+
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: -webkit-linear-gradient(to right, rgb(168, 156, 218), rgba(11, 11, 11));
+
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background: linear-gradient(to right, rgba(168, 156, 218), rgb(168, 156, 218))
+    }
+</style>
+
+<body>
+   <div style="height: 100%; width: 100%; display: flex; align-items: center; justify-content: center;">
+  <div class="container mt-100">
+    <div class="row" style="padding-top: 200px;">
+      <div class="col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+        <div class="card-body cart" style="background-color: #eee; padding-top: 10px;">
+          <div class="empty-cart-cls text-center">
+            <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+            <h3><strong>Your Wishlist is Empty</strong></h3>
+            <h4>something to make me delighted:</h4>
+            <a href="/allproducts" class="btn btn-warning cart-btn-transform m-3" data-abc="true">Continue Shopping</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{else}}
+ 
+<div style="padding-top: 150px;" class="container">
+   
+  <div class="card">
+    
+    <div class="card-body">
+        {{#each list.products}}
+      <div class="row mb-3">
+        <div class="col-md-2">
+          <img class="card-img-top" style="width: 170px; height: 170px" src="{{this.itemphotos.[2].fileName}}" alt="Product Image">
+        </div>
+        <div class="col-md-7">
+          <div style="padding-top: 50px;" class="d-flex flex-column justify-content-center">
+           <div class="d-flex justify-content-center"><h5 class="card-title">{{this.itemName}}</h5></div> 
+           <div class="d-flex justify-content-center"><p class="card-text">Price: {{this.itemPrice}}</p></div>
+          </div>
+        </div>
+        <div class="col-md-3 d-flex align-items-center">
+          
+             
+            <button type = "button"class="btn btn-outline-warning ml-2"onclick="addToCart('{{this.item}}')">
+              Add to Cart <i class = "fas fa-shopping-cart"></i>
+            </button>
+          <button type="button" class="btn btn-outline-danger ml-2" onclick="removeProduct('{{../list._id}}', '{{this.item}}')"> <i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+      <hr>
+      {{/each}}
+    </div>
+  </div>
+</div>
+
+{{/if}}
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+<script>
+
+function removeProduct(wishId, prodId) {
+  $.ajax({
+    url: '/remove-from-wishlist',
+    data: {
+      id: wishId,
+      product: prodId,
+    },
+    method: 'post',
+    success: (response) => {
+      Swal.fire({
+        title: 'Confirmation',
+        text: 'Are you sure you want to remove this product from the Wishlist?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          location.reload();
+        }
+      });
+    }
+  });
+}
+
+</script>
+
+
+
+
+
+
+
+
+<!-- user/view-order-products.hbs -->
+<style>
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s;
+    transition: transform 0.5s ease;
+    opacity: 0; /* Initially hide the card */
+    animation: fade-in 0.5s forwards; /* Apply the fade-in animation */
+  }
+
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  .badge {
+    font-size: 12px;
+    padding: 5px 8px;
+    background-color: #090a09;
+    color: #fff;
+    border-radius: 4px;
+  }
+
+  /* Fade-in animation */
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+
+</style>
+

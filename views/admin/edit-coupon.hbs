@@ -1,0 +1,118 @@
+<style>
+  
+  .coupon-form {
+    width: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin: 0 auto;
+    margin-top: 5px;
+  }
+
+  .coupon-form label {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .coupon-form input[type="text"],
+  .coupon-form input[type="number"],
+  .coupon-form textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  }
+
+  .coupon-form input[type="submit"] {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  .coupon-form input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+</style>
+
+<div style="padding-top: 80px;" class="container"></div>
+
+<div class="coupon-form">
+{{!-- error mesage --}}
+<div id="error-message" style="color: red; font-weight: bolder; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"></div>
+{{!-- error mesage end --}}
+  <form  id="coupon-form">
+    <label for="coupon_code">Coupon Code:</label>
+    <input type="text" id="couponCode" value="{{coupon.couponCode}}" name="couponCode" required>
+
+    <label for="expiry_date">Expiry Date:</label>
+    <input type="date" id="expiryDate" value="{{coupon.expiryDate}}" name="expiryDate" required>
+
+    <label for="discount">Discount:</label>
+    <input type="number" id="discount" value="{{coupon.discount}}" name="discount" required>
+
+    <label for="max_usage">Min Purchase:</label>
+    <input type="number" id="maxUsage" value="{{coupon.maxPurchase}}" name="maxPurchase" required>
+    <input type="text" value="{{coupon._id}}" name="id" hidden>
+
+    <input type="submit" value="Add Coupon" >
+
+    
+  </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+<script>
+  $("#coupon-form").submit(function(event) {
+    event.preventDefault(); // Prevent form submission
+
+    // Get form values
+    var couponCode = $("#couponCode").val();
+    var expiryDate = new Date($("#expiryDate").val()); // Convert expiryDate to a Date object
+    var discount = parseFloat($("#discount").val());
+    var maxUsage = parseFloat($("#maxUsage").val());
+
+    // Validate minimum purchase
+    if (maxUsage < discount) {
+      // Display error message
+      $("#error-message").text("Minimum purchase should be greater than to the discount amount.");
+      return; // Stop form submission
+    }
+
+    // Validate expiry date
+    var currentDate = new Date(); // Get current date
+    if (expiryDate < currentDate) {
+      // Display error message
+      $("#error-message").text("Expiry date cannot be in the past.");
+      return; // Stop form submission
+    }
+
+    // Perform Ajax request
+    $.ajax({
+      url: "/admin/edit-coupon",
+      type: "POST",
+      data: $('#coupon-form').serialize(),
+      success: function(response) {
+        // Display SweetAlert success message
+        Swal.fire({
+          icon: "success",
+          title: "Coupon Edited",
+          text: "The coupon has been successfully edited.",
+          showConfirmButton: false,
+          timer: 1500
+        }).then(function() {
+          location.href = '/admin/view-coupon';
+        });
+      },
+      error: function(error) {
+        // Handle Ajax error
+        console.log(error);
+        // Display an error message or perform other error handling
+      }
+    });
+  });
+</script>

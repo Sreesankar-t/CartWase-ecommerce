@@ -1,0 +1,169 @@
+{{!-- <style>
+    body {
+    background-image: linear-gradient(180deg, #eee, #fff 100px, #fff);
+}
+</style>
+ {{#each orders}}
+<div class="container mt-5 mb-3">
+
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="d-flex flex-row p-2">
+                    <div class="d-flex flex-column"> <span class="font-weight-bold"><strong>Order summery</strong></span> </div>
+                </div>
+                <hr>
+                <div class="table-responsive p-2">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr class="add">
+                                <td>Sold By</td>
+                                <td>Billing Address</td>
+                            </tr>
+                            <tr class="content">
+                                <td class="font-weight-bold">
+                                    <h3>Mr. Robot Computers </h3>
+                                    <p>Robot Complex, Gandhi street,<br> MP Nagar Bhopal</p>
+                                </td>
+                                <td class="font-weight-bold">Modi Stadium <br> Gandhi Nagar, Gujrat</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+                <div class="products p-2">
+                    <table class="table table-dark">
+                        <thead>
+                            <tr>
+                                <td scope="col">Product List</td>
+                                <td scope="col">Quantity</td>
+                                <td scope="col">Price</td>
+                                <td scope="col" class="text-center">Total</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="content">
+                                <td>Desktop</td>
+                                <td>15</td>
+                                <td>2000</td>
+                                <td class="text-center">₹30,000</td>
+                            </tr>
+                            <tr class="content">
+                                <td>Keyboard</td>
+                                <td>10</td>
+                                <td>200</td>
+                                <td class="text-center">₹2000</td>
+                            </tr>
+                            <tr class="content">
+                                <td>Mouse</td>
+                                <td>10</td>
+                                <td>150</td>
+                                <td class="text-center">₹1500</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+                <div class="products p-2">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr class="add">
+                                <td class="text-center">
+                                    <h3>Total Price</h3>
+                                </td>
+                            </tr>
+                            <tr class="content">
+                                <td class="text-center">
+                                    <h2>₹33,500</h2>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div> --}}
+
+
+
+
+
+
+<div style="padding-top: 100px;" class="container">
+  <div class="row mt-4">
+    
+  </div>
+
+  <table class="table mt-5">
+    <thead>
+      <tr>
+        <th>products Name</th>
+        <th scope="col">Date</th>
+        <th>Address</th>
+        <th>Pincode</th>
+        <th>Mobile</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Payment</th>
+        <th>Status</th>
+         <th>Updates</th>
+          <th>Updates</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each orders}}
+      <tr>
+        <td>
+            {{#each products}}
+             {{this.itemName}}<br>
+            {{/each}}
+        </td>
+        <td>{{this.date}}</td>
+        <td>{{this.deliveryDetails.address}}</td>
+        <td>{{this.deliveryDetails.pincode}}</td>
+        <td>{{this.deliveryDetails.phone}}</td>
+        {{#if (eq totalAmount 0)}}
+        <td style="color: green;">Amount paid </td>
+        {{else}}
+        <td>{{this.totalAmount}}</td>
+        {{/if}}
+        <td>{{this.paymentMethod}}</td>
+        {{#if (eq status 'Cancelled')}}
+        <td style="color: red;"><b>{{this.status}}</b></td>
+        {{else if (eq status 'placed')}}
+        <td style="color: rgb(21, 190, 159);"><b>{{this.status}}</b></td>
+        {{else if (eq this.status 'Shipped')}}
+    <td style="color: rgb(206, 168, 14);"><b>{{this.status}}</b></td>
+     {{else if (eq this.status 'Delivered')}}
+    <td style="color: rgb(14, 206, 40);"><b>{{this.status}}</b></td>
+     {{else if (eq this.status 'Return')}}
+    <td style="color: rgb(206, 14, 14);"><b>{{this.status}}ed</b></td>
+     {{/if}}
+     {{#if (eq this.status 'Delivered')}}
+         <td>
+            <a href="/return-order?id={{this._id}}&st=Return" style="width: 7rem;" class="btn btn-danger"
+              onclick="return ">Return</a>
+         
+     {{/if}}
+       
+       
+       
+        <td>
+            <a href="/view-order-products/{{this._id}}" class="btn btn-outline-warning">view products</a>
+        </td>
+        <td>
+            {{#if (eq this.status "placed")}}
+            <a  href="/cancel-order?id={{this._id}}&&st=Cancelled" class="btn btn-outline-danger" type="button" >Cancel</a>
+            {{/if}}
+              {{#if (eq this.status "Shipped")}}
+            <a  href="/cancel-order?id={{this._id}}&&st=Cancelled" class="btn btn-outline-danger" type="button" >Cancel</a>
+            {{/if}}
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+

@@ -1,0 +1,359 @@
+{{#if emptyError}}
+<style>
+  
+  .card-container {
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 1);
+  }
+  .card-body.cart {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow effect */
+    transition: box-shadow 0.3s ease-in-out; /* Add transition effect */
+  }
+  .card-body.cart:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Change shadow effect on hover */
+  }
+    .card:hover {
+    transform: translateY(-10px); /* Increase the size of the card on hover */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4); /* Change the box shadow on hover */
+  }
+  
+  .card {
+    transition: transform 0.5s ease;
+    
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+  }
+  
+</style>
+<div style="height: 100%; width: 100%; display: flex; align-items: center; justify-content: center;">
+  <div class="container mt-100">
+    <div class="row" style="padding-top: 200px;">
+      <div class="col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+        <div class="card-body cart" style="background-color: #eee; padding-top: 10px;">
+          <div class="empty-cart-cls text-center">
+            <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+            <h3><strong>Your Cart is Empty</strong></h3>
+            <h4>Add something to make me happy :</h4>
+            <a href="/allproducts" class="btn btn-warning cart-btn-transform m-3" data-abc="true">Continue Shopping</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{else}}
+
+<section style="padding-top: 100px;" class="h-100 gradient-custom">
+  <div class="container py-5">
+    
+    <div class="row d-flex justify-content-center my-4">
+      <div class="col-md-8">
+        <div class="card mb-4">
+          <div style="background-color: rgb(41, 40, 40);" class="card-header py-3">
+            <h5 style="color: #ffffff;" class="mb-0"><strong> Your Cart</strong></h5>
+          </div>
+          <div class="card-body">
+            {{#each products}}
+           
+            <!-- Single item -->
+            <div class="row">
+              
+              <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                <!-- Image -->
+                <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
+                  <img  src="{{this.product.photos.[2].fileName}}"
+                    class="w-100" alt="Blue Jeans Jacket" />
+                  <a href="#!">
+                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+                  </a>
+                </div>
+                <!-- Image -->
+              </div>
+              
+
+              <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                <!-- Data -->
+                <p><strong>{{this.product.Name}}</strong></p>
+                
+              
+                {{!-- <a href="#" class="btn btn-danger " onclick="removeProduct ('{{this._id}}','{{this.product._id}}')">Remove</a> --}}
+                <button type="button" class="btn btn-outline-danger" onclick="confirmRemove('{{this._id}}', '{{this.product._id}}')">Remove</button>
+                <!-- Data -->
+              </div>
+            
+              
+              <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                <!-- Quantity -->
+                 
+                  <th scope="col">Quantity</th>
+                <td >
+                  <button class="btn btn-outline-warning cart-item-count mr-3" onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user._id}}',-1)">-</button>
+                  <span id="{{this.product._id}}">{{this.quantity}}</span> 
+                  <button class="btn btn-outline-warning cart-item-count ml-3" onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user._id}}',1)">+</button>
+                
+                </td>
+
+                 <p style="margin-top: 5rem;" class="text-start text-md-center ">
+                  <strong>₹ {{this.product.Price}}</strong>
+                </p>
+                </div >
+                <!-- Quantity -->
+                 
+                <!-- Price -->
+                
+                <!-- Price -->
+              </div>
+             
+            </div>
+            </div>
+            <!-- Single item -->
+               
+ 
+        {{!-- <div class="card mb-4">
+          <div class="card-body">
+            <p><strong>Expected shipping delivery</strong></p>
+            <p class="mb-0">date</p>
+          </div>
+        </div> --}}
+           
+        <div class="card mb-4 mb-lg-0">
+          <div class="card-body">
+             {{/each}}
+            <p><strong>We accept</strong></p>
+            <img class="me-2" width="45px"
+              src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
+              alt="Visa" />
+            <img class="me-2" width="45px"
+              src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
+              alt="American Express" />
+            <img class="me-2" width="45px"
+              src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
+              alt="Mastercard" />
+             
+          </div>
+          
+        </div>
+      </div>
+     
+      <div class="col-md-4 ">
+    
+    
+
+
+  
+  <div class="card-body">
+    <div style="background-color:  rgb(41, 40, 40);;" class="card-header py-3 pt-2">
+    
+    <h5 style="color: #ffffff;" class="mb-0">Summary</h5>
+  </div>
+    <ul class="list-group list-group-flush">
+       
+      <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+        Shipping
+        <span>Free Shipping</span>
+      </li>
+      <li class="list-group-item border-0 px-0 mb-3">
+        <div class="wallet-container">
+                   
+        <div class="d-flex flex-column">
+          <div class="d-flex justify-content-between">
+            <span><strong>Cart Total:</strong></span>
+            <span>₹<span id="total">{{total}}</span></span>
+          </div>
+          {{!-- <div class="d-flex justify-content-between">
+            <span><strong>Coupon savings:</strong></span>
+            <span>₹<span id="discount">0</span></span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span><strong>Amount Payable:</strong></span>
+            <span>₹<span id="totalPrice">{{total}}</span></span>
+          </div> --}}
+        </div>
+      </li>
+    </ul>
+    <a href="/place-order" type="button" class="btn btn-warning btn-lg btn-block">Place Order</a>
+  </div>
+</div>
+ {{!-- wallet --}}
+        
+       {{!--  --}}
+      </div>
+    </div>
+  </div>
+  {{/if}}
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+function changeQuantity(cartId, proId, userId, count) {
+    let quantity = parseInt(document.getElementById(proId).innerHTML);
+    count = parseInt(count);
+
+    if (quantity === 1 && count === -1) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'You are about to remove the last item from the cart',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Remove',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          updateQuantity();
+        }
+      });
+    } else {
+      updateQuantity();
+    }
+
+    function updateQuantity() {
+      $.ajax({
+        url: '/change-product-quantity',
+        data: {
+          user: userId,
+          cart: cartId,
+          product: proId,
+          count: count,
+          quantity: quantity
+        },
+        method: 'post',
+        success: (response) => {
+          if (response.removeProduct) {
+            Swal.fire('Removed!', 'Product removed from cart', 'success').then(() => {
+              location.reload();
+            });
+          } else {
+            document.getElementById(proId).innerHTML = quantity + count;
+            document.getElementById('total').innerHTML = response.total;
+            document.getElementById('totalPrice').innerHTML = response.total;
+          }
+        }
+      });
+    }
+  }
+  function removeProduct(cartId,prodId){
+  $.ajax({
+    url:'/remove-from-cart',
+    data:{
+      cart:cartId,
+      product:prodId,
+    },
+    method:'post',
+    success:(response)=>{
+        alert("Product removed from Cart")
+        location.reload()
+    }
+  })
+}
+
+//-------sweet alert------
+function confirmRemove(cartId, proId) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You are about to remove the product from the cart',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Remove',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        removeProduct(cartId, proId);
+      }
+    });
+  }
+
+  function removeProduct(cartId, proId) {
+    $.ajax({
+      url: '/remove-from-cart',
+      data: {
+        cart: cartId,
+        product: proId,
+      },
+      method: 'post',
+      success: (response) => {
+        Swal.fire('Removed!', 'Product removed from cart', 'success').then(() => {
+          location.reload();
+        });
+      }
+    });
+  }
+
+  //----coupen---//
+
+  function applyCoupon() {
+    var selectedCoupon = document.getElementById('coupon').value; // Get the selected coupon value
+
+    // Perform further actions with the selected coupon
+    console.log('Applying coupon:', selectedCoupon);
+    $.ajax({
+      url: '/apply-coupon',
+      data: {
+        coupon: selectedCoupon
+      },
+      method: 'post',
+      success: (response) => {
+
+       if (response.response) {
+                Swal.fire({
+            icon: 'success',
+            title: 'Coupon Success',
+            text: 'The coupon applied successfully.',
+            toast: true,
+            position: 'center',
+            showConfirmButton: true
+          });
+          document.getElementById('discount').innerHTML = response.discountAmount
+           document.getElementById('totalPrice').innerHTML = response.newTotal
+      
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Coupon Expired',
+            text: 'The coupon has expired.',
+            toast: true,
+            position: 'center',
+            showConfirmButton: true
+          });
+
+
+        }
+      }
+    })
+ }
+ function walletApply(userId, wallet) {
+
+    $.ajax({
+      url: '/use-wallet',
+      method: 'POST',
+      data: {
+        userId: userId,
+        wallet: wallet
+      },
+      success: function (response) {
+        document.getElementById('totalPrice').innerHTML = response.total
+        document.getElementById('wallet').innerHTML = response.walletBalance
+      }
+    })
+  }
+  
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
