@@ -313,24 +313,25 @@ placeorderget = async (req, res) => {
 
 
   placeorderpost=async(req,res)=>{
-    console.log("1----------")
+
     console.log(req.body)
-    console.log('------------')
+   
     userId=req.session.user._id
     let test = req.session.user.pAmount;
-    // let amount=await couponHelpers.getCouponAmount(req.session.usedCoupon)
-    // let walletAmout=await couponHelpers.getWalletAmount(userId)
-    // let products=await userHelpers.getProductsList(req.body.userId)
-    let [amount,walletAmout,products]=await Promise.all([
-      couponHelpers.getCouponAmount(req.session.usedCoupon),
-      couponHelpers.getWalletAmount(userId),
-      userHelpers.getProductsList(req.body.userId)
-    ])
+  let walletAmout=0;
+   let amount=await  couponHelpers.getCouponAmount(req.session.usedCoupon)
+   if(req.session.walletApply){
+    walletAmout=await couponHelpers.getWalletAmount(userId)
+   }
+   let products= await  userHelpers.getProductsList(req.body.userId)
+    
+
+ 
+  
+
     req.body.amount=amount;
     req.body.walletAmout=walletAmout
-     // let totalPrice=await userHelpers.getTotalAmount(req.body.userId)
     let total=req.session.user.pAmount
-    //  userHelpers.placeOrder(req.body,products,total).then((orderId)=>{
       order= await userHelpers.placeOrder(req.body,products,total)
       req.session.orderId=order;
    if(req.body['payment-method']=='COD'){

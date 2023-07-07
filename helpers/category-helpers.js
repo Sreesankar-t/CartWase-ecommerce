@@ -126,7 +126,7 @@ module.exports={
         getAllcategoryPagination:(val)=>{
           return new Promise(async(resolve,reject)=>{
             console.log(val)
-            let category = await db.get()
+            let category = await db.get()     
             .collection(collection.CATE_COLLECTION)
             .find()
             .skip((val - 1)*10)
