@@ -7,14 +7,10 @@ const userRouter = require('./routes/user');
 const adminRouter = require('./routes/admin');
 const hbs =require('express-handlebars')
 const handlebars=require('handlebars')
-// const fileUpload=require('express-fileupload')
 const db=require('./config/connection')
 const app = express();
 const   session=require('express-session')
 const nocache=require('nocache')
-
-
-
 const Swal = require('sweetalert2');
 
 // view engine setup//
