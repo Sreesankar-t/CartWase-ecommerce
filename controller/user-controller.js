@@ -59,7 +59,7 @@ async  function homepageget(req, res) {
     if (req.session.loggedIn) {
       res.redirect('/');
     } else {
-      res.render('user/login', { loginError: req.session.loginError, blockError: req.session.blockError });
+      res.render('user/login', { loginError: req.session.loginError, blockError: req.session.blockError,user:true });
       req.session.loginError = false;
       req.session.blockError = false;
     }
@@ -83,9 +83,10 @@ async  function homepageget(req, res) {
   }
  
  signupget= (req, res) => {
-    res.render('user/signup', { loginError: req.session.loginError });
+    res.render('user/signup', { loginError: req.session.loginError, });
     req.session.loginError = false;
   }
+
 
 
   signuppost=(req, res) => {

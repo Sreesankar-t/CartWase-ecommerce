@@ -150,5 +150,20 @@
   </div>
   </form>
 </div>
+<div id="loader-container"></div>
+
 
 </body>
+<script>
+  function showLoader() {
+  // Get the loader container element
+  const loaderContainer = document.getElementById("loader-container");
+
+  // Create the Spin.js spinner
+  const spinner = new Spinner().spin();
+
+  // Append the spinner to the loader container
+  loaderContainer.appendChild(spinner.el);
+}
+
+</script>

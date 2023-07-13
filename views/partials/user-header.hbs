@@ -54,7 +54,9 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: rgba(0, 0, 0,0.7)">
-     <a style="color: rgba(0, 255, 240, 1); text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);" class="navbar-brand" href="/"><b>𝙲𝚊𝚛𝚝𝚆𝚒𝚜𝚎.𝚌𝚘𝚖</b></a>
+         <button class="btn btn-outline-light btn btn-sm" id="back-button"><i class="fas fa-arrow-left"></i> </button>
+   
+     <a style="color: rgb(255, 255, 255); text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);" class="navbar-brand ml-3" href="/"><b>C</b>art<b>W</b>ise.site</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,7 +103,7 @@
                     </li> --}}
                 </ul>
                 <div class="dropdown">
-                    <button class="btn btn-outline-success dropdown-toggle ml-4 ms-2" type="button" id="dropdownMenuButton"
+                    <button class="btn btn-outline-info dropdown-toggle ml-4 ms-2" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{#if user}}
                         {{user.Name}}
@@ -126,7 +128,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
+<script>
+    // Get a reference to the back button element
+const backButton = document.getElementById("back-button");
 
+// Add a click event listener to the back button
+backButton.addEventListener("click", function() {
+  // Call the goBack function to navigate back
+  goBack();
+});
+function goBack() {
+  // Use the history object to navigate back
+  window.history.back();
+}
+
+</script>
 </html>
 
 

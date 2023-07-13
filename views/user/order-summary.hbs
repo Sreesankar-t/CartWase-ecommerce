@@ -1,19 +1,10 @@
-
-
-
-
-
-
-
 <div style="padding-top: 100px;" class="container">
-  <div class="row mt-4">
-    
-  </div>
+  <div class="row mt-4"></div>
 
   <table class="table mt-5">
     <thead>
       <tr>
-        <th>products Name</th>
+        <th>Product Name</th>
         <th scope="col">Date</th>
         <th>Address</th>
         <th>Pincode</th>
@@ -21,17 +12,17 @@
         <th scope="col">Amount</th>
         <th scope="col">Payment</th>
         <th>Status</th>
-         <th>Updates</th>
-          <th>Updates</th>
+        <th>Updates</th>
+        <th>Updates</th>
       </tr>
     </thead>
     <tbody>
       {{#each orders}}
       <tr>
         <td>
-            {{#each products}}
-             {{this.itemName}}<br>
-            {{/each}}
+          {{#each products}}
+          {{this.itemName}}<br>
+          {{/each}}
         </td>
         <td>{{this.date}}</td>
         <td>{{this.deliveryDetails.address}}</td>
@@ -48,35 +39,226 @@
         {{else if (eq status 'placed')}}
         <td style="color: rgb(21, 190, 159);"><b>{{this.status}}</b></td>
         {{else if (eq this.status 'Shipped')}}
-    <td style="color: rgb(206, 168, 14);"><b>{{this.status}}</b></td>
-     {{else if (eq this.status 'Delivered')}}
-    <td style="color: rgb(14, 206, 40);"><b>{{this.status}}</b></td>
-     {{else if (eq this.status 'Return')}}
-    <td style="color: rgb(206, 14, 14);"><b>{{this.status}}ed</b></td>
-     {{/if}}
-     {{#if (eq this.status 'Delivered')}}
-         <td>
-            <a href="/return-order?id={{this._id}}&st=Return" style="width: 7rem;" class="btn btn-danger"
-              onclick="return ">Return</a>
-         
-     {{/if}}
-       
-       
-       
+        <td style="color: rgb(206, 168, 14);"><b>{{this.status}}</b></td>
+        {{else if (eq this.status 'Delivered')}}
+        <td style="color: rgb(14, 206, 40);"><b>{{this.status}}</b></td>
+        {{else if (eq this.status 'Return')}}
+        <td style="color: rgb(206, 14, 14);"><b>{{this.status}}ed</b></td>
+        {{/if}}
+        {{#if (eq this.status 'Delivered')}}
         <td>
-            <a href="/view-order-products/{{this._id}}" class="btn btn-outline-warning">view products</a>
+          <button  type="button" class="btn btn-danger" data-toggle="modal" data-target="#returnModal-{{this._id}}">
+            Return
+          </button>
+          {{/if}}
+          <div class="modal fade" id="returnModal-{{this._id}}" tabindex="-1" role="dialog"
+            aria-labelledby="returnModalLabel-{{this._id}}" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="returnModalLabel-{{this._id}}">Select a reason for return</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form action="#" method="POST">
+    
+                    <input type="hidden" name="id" value="{{this._id}}">
+                    <input type="hidden" name="st" value="Return">
+                    
+
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="radio" name="reason" id="defectiveReason" value="Defective" required>
+    <label class="form-check-label" for="defectiveReason">
+      Defective product
+
+    </label>
+  </div>
+
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="radio" name="reason" id="wrongItemReason" value="Wrong item received" required>
+    <label class="form-check-label" for="wrongItemReason">
+      Wrong item received
+    </label>
+  </div>
+
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="radio" name="reason" id="notDescribedReason" value="Not as described" required>
+    <label class="form-check-label" for="notDescribedReason">
+     Item not as described
+    </label>
+  </div>
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="radio" name="reason" id="notDescribedReason" value="Not as described" required>
+    <label class="form-check-label" for="notDescribedReason">
+     Compatibility issue with my device
+    </label>
+  </div>
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="radio" name="reason" id="notDescribedReason" value="Not as described" required>
+    <label class="form-check-label" for="notDescribedReason">
+      Product doesn't meet my requirements
+    </label>
+  </div>
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="radio" name="reason" id="notDescribedReason" value="Not as described" required>
+    <label class="form-check-label" for="notDescribedReason">
+      Damaged during shipping
+    </label>
+  </div>
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="radio" name="reason" id="notDescribedReason" value="Not as described" required>
+    <label class="form-check-label" for="notDescribedReason">
+      Received the wrong configuration
+    </label>
+  </div>
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="radio" name="reason" id="notDescribedReason" value="Not as described" required>
+    <label class="form-check-label" for="notDescribedReason">
+      Malfunctioning components
+    </label>
+  </div>
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="radio" name="reason" id="notDescribedReason" value="Not as described" required>
+    <label class="form-check-label" for="notDescribedReason">
+     Poor performance or slow speed
+    </label>
+  </div>
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="radio" name="reason" id="notDescribedReason" value="Not as described" required>
+    <label class="form-check-label" for="notDescribedReason">
+     Incompatibility with software or peripherals
+    </label>
+  </div>
+<div class="container d-flex justify-content-end">
+      <a href="/return-order?id={{this._id}}&st=Return" style="width: 7rem;" class="btn btn-danger mt-4"
+              onclick="return ">Return</a>
+</div>
+                  
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+        
+
+        <td>
+          <a href="/view-order-products/{{this._id}}" class="btn btn-outline-warning">View products</a>
         </td>
         <td>
-            {{#if (eq this.status "placed")}}
-            <a  href="/cancel-order?id={{this._id}}&&st=Cancelled" class="btn btn-outline-danger" type="button" >Cancel</a>
-            {{/if}}
-              {{#if (eq this.status "Shipped")}}
-            <a  href="/cancel-order?id={{this._id}}&&st=Cancelled" class="btn btn-outline-danger" type="button" >Cancel</a>
-            {{/if}}
+          {{#if (eq this.status "placed")}}
+          {{!-- <a href="/cancel-order?id={{this._id}}&&st=Cancelled" class="btn btn-outline-danger" type="button">Cancel</a> --}}
+           <button  type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelModal-{{this._id}}">Cancel</button>
+          {{/if}}
+          {{#if (eq this.status "Shipped")}}
+          {{!-- <a href="/cancel-order?id={{this._id}}&&st=Cancelled" class="btn btn-outline-danger" type="button">Cancel</a> --}}
+          <button  type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelModal-{{this._id}}">
+          Cancel
+          </button>
+          {{/if}}
+            <div class="modal fade" id="cancelModal-{{this._id}}" tabindex="-1" role="dialog"
+            aria-labelledby="cancelModalLabel-{{this._id}}" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="cancelModalLabel-{{this._id}}">Select a reason for return</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form action="#" method="POST">
+    
+                    <input type="hidden" name="id" value="{{this._id}}">
+                    <input type="hidden" name="st" value="cancel">
+                    
+
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="radio" name="reason" id="defectiveReason" value="Defective" required>
+    <label class="form-check-label" for="defectiveReason">
+      Changed my mind
+
+    </label>
+  </div>
+
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="radio" name="reason" id="wrongItemReason" value="Wrong item received" required>
+    <label class="form-check-label" for="wrongItemReason">
+     Found a defect.
+    </label>
+  </div>
+
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="radio" name="reason" id="notDescribedReason" value="Not as described" required>
+    <label class="form-check-label" for="notDescribedReason">
+     Financial problems
+    </label>
+  </div>
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="radio" name="reason" id="notDescribedReason" value="Not as described" required>
+    <label class="form-check-label" for="notDescribedReason">
+     Shipping problems
+    </label>
+  </div>
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="radio" name="reason" id="notDescribedReason" value="Not as described" required>
+    <label class="form-check-label" for="notDescribedReason">
+     Product not available.
+    </label>
+  </div>
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="radio" name="reason" id="notDescribedReason" value="Not as described" required>
+    <label class="form-check-label" for="notDescribedReason">
+      Unexpected price increase.
+    </label>
+  </div>
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="radio" name="reason" id="notDescribedReason" value="Not as described" required>
+    <label class="form-check-label" for="notDescribedReason">
+      Poor customer service.
+    </label>
+  </div>
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="radio" name="reason" id="notDescribedReason" value="Not as described" required>
+    <label class="form-check-label" for="notDescribedReason">
+     Unclear or confusing cancellation policy
+    </label>
+  </div>
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="radio" name="reason" id="notDescribedReason" value="Not as described" required>
+    <label class="form-check-label" for="notDescribedReason">
+Technical problems with the website.
+    </label>
+  </div>
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="radio" name="reason" id="notDescribedReason" value="Not as described" required>
+    <label class="form-check-label" for="notDescribedReason">
+      Unexpected additional costs.
+    </label>
+  </div>
+<div class="container d-flex justify-content-end">
+     
+               <a href="/cancel-order?id={{this._id}}&&st=Cancelled" class="btn btn-outline-danger" type="button">Cancel</a>
+</div>
+                  
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
         </td>
       </tr>
       {{/each}}
     </tbody>
   </table>
 </div>
+
+
+
+
+
+
+
 
