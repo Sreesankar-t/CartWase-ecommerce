@@ -1,42 +1,41 @@
- 
-let db=require("../config/connection");
-let collection=require("../config/collections");
-const bcrypt=require('bcrypt');
-const objectId=require("mongodb").ObjectId;
-const { ObjectId } = require("mongodb");
+let db = require('../config/connection')
+let collection = require('../config/collections')
+const bcrypt = require('bcrypt')
+const objectId = require('mongodb').ObjectId
+const { ObjectId } = require('mongodb')
 
- module.exports = {
-  addcoupon: (data) => {
-    return new Promise((resolve) => {
+module.exports = {
+  addcoupon: data => {
+    return new Promise(resolve => {
       db.get()
         .collection(collection.COUPON_COLLECTION)
         .insertOne(data)
-        .then((response) => {
-          resolve(response);
-        });
-    });
+        .then(response => {
+          resolve(response)
+        })
+    })
   },
   getCoupons: () => {
-    return new Promise(async (resolve) => {
+    return new Promise(async resolve => {
       let coupons = await db
         .get()
         .collection(collection.COUPON_COLLECTION)
         .find({})
-        .toArray();
-      resolve(coupons);
-    });
+        .toArray()
+      resolve(coupons)
+    })
   },
-  getOneCoupon: (id) => {
+  getOneCoupon: id => {
     return new Promise(async (resolve, reject) => {
       let coupon = await db
         .get()
         .collection(collection.COUPON_COLLECTION)
-        .findOne({ _id: objectId(id) });
-      resolve(coupon);
-    });
+        .findOne({ _id: objectId(id) })
+      resolve(coupon)
+    })
   },
   editCoupon: (id, data) => {
-    return new Promise(async (resolve) => {
+    return new Promise(async resolve => {
       let response = await db
         .get()
         .collection(collection.COUPON_COLLECTION)
@@ -47,71 +46,76 @@ const { ObjectId } = require("mongodb");
               couponCode: data.couponCode,
               expiryDate: data.expiryDate,
               discount: data.discount,
-              maxPurchase: data.maxPurchase,
-            },
+              maxPurchase: data.maxPurchase
+            }
           }
-        );
-      resolve(response);
-    });
-  },
-  deleteCoupon:(id)=>{
-    return new Promise((resolve)=>{
-      db.get().collection(collection.COUPON_COLLECTION).deleteOne({_id:objectId(id)}).then((data)=>{
-        resolve(data)
-      })
+        )
+      resolve(response)
     })
   },
-  giveCoupon:(price)=>{
-    return new Promise(async(resolve)=>{
+  deleteCoupon: id => {
+    return new Promise(resolve => {
+      db.get()
+        .collection(collection.COUPON_COLLECTION)
+        .deleteOne({ _id: objectId(id) })
+        .then(data => {
+          resolve(data)
+        })
+    })
+  },
+  giveCoupon: price => {
+    return new Promise(async resolve => {
       let coupon = await db
-      .get()
-      .collection(collection.COUPON_COLLECTION)
-      .find({ $expr: { $lt: [{ $toInt: "$maxPuchase" }, price] } })
-      .sort({ maxPurchase: 1 })
-      .limit(1)
-      .toArray();
-  
-      if(coupon.length){
+        .get()
+        .collection(collection.COUPON_COLLECTION)
+        .find({ $expr: { $lt: [{ $toInt: '$maxPuchase' }, price] } })
+        .sort({ maxPurchase: 1 })
+        .limit(1)
+        .toArray()
+
+      if (coupon.length) {
         resolve(coupon[0].couponCode)
-      }else{
+      } else {
         resolve(null)
       }
     })
   },
-  applyCoupon:(couponCode) =>{
-    return new Promise(async(resolve)=>{
-      let userCoupon = await db.get().collection(collection.COUPON_COLLECTION).findOne({couponCode:couponCode}) 
+  applyCoupon: couponCode => {
+    return new Promise(async resolve => {
+      let userCoupon = await db
+        .get()
+        .collection(collection.COUPON_COLLECTION)
+        .findOne({ couponCode: couponCode })
       resolve(userCoupon)
     })
-   },
-   getCouponAmount:(coupon)=>{
-   return new Promise(async(resolve)=>{
-    let userAmount= await db.get().collection(collection.COUPON_COLLECTION).findOne({couponCode:coupon},{discount:1})
-    if(userAmount){
-   
-    resolve(userAmount.discount)
-    }else{
-    resolve(0)
-    }
-   })
-   },
-   getWalletAmount: (userId) => {
+  },
+  getCouponAmount: coupon => {
+    return new Promise(async resolve => {
+      let userAmount = await db
+        .get()
+        .collection(collection.COUPON_COLLECTION)
+        .findOne({ couponCode: coupon }, { discount: 1 })
+      if (userAmount) {
+        resolve(userAmount.discount)
+      } else {
+        resolve(0)
+      }
+    })
+  },
+  getWalletAmount: userId => {
     return new Promise(async (resolve, reject) => {
       try {
         const walletAmount = await db
           .get()
           .collection(collection.USER_COLLECTION)
-          .findOne({ _id: ObjectId(userId) }, { projection: { walletAmount: 1 } });
-        resolve(walletAmount.walletAmount);
-
-       
-
+          .findOne(
+            { _id: ObjectId(userId) },
+            { projection: { walletAmount: 1 } }
+          )
+        resolve(walletAmount.walletAmount)
       } catch (error) {
-        reject(error);
+        reject(error)
       }
-    });
-   }
-  
-
-   
-};
+    })
+  }
+}

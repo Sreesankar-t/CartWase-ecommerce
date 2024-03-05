@@ -1,109 +1,124 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Add Product</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-</head>
-<body>
-  <section >
-    <div style="padding-left: 100px;" class="container mt-4">
+<html lang='en'>
+  <head>
+    <title>Add Product</title>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <link
+      rel='stylesheet'
+      href='https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css'
+    />
+    <script src='https://unpkg.com/sweetalert/dist/sweetalert.min.js'></script>
+  </head>
+  <body>
+    <section>
+      <div style='padding-left: 100px;' class='container mt-4'>
 
-      <h2 class="text-center">Add Product</h2>
-      <form id="categoryForm" action="/admin/add-products" method="POST" enctype="multipart/form-data" onsubmit="return validateForm() && confirmSubmit()">
-        <div class="form-group">
-          <label for="no">NO:</label>
-          <input type="number" name="No" class="form-control" id="no" placeholder="Enter the product no:" required>
-          <div class="invalid-feedback">Please enter a positive number</div>
-        </div>
-        <div class="form-group">
-          <label for="name">Name:</label>
-          <input type="text" name="Name" class="form-control" id="name" placeholder="Enter Product Name" required>
-          <div class="invalid-feedback">Please enter a name with a maximum of 25 characters.</div>
-        </div>
-        <div class="form-group">
-          <label for="">Description:</label>
-          <textarea name="Description" class="form-control" id="description" rows="3" placeholder="Enter Description" required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="category">Category</label>
-          <select name="Category" class="form-control" required>
-            <option></option>
-            {{#each category}}
-            <option>{{this.Category}}</option>
-            {{/each}}
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="">Price:</label>
-          <input type="number" name="Price" class="form-control" id="price" placeholder="Enter Price" required>
-    
-          <div class="invalid-feedback">Please enter a positive number</div>
-        </div>
-        <div class="form-group">
-          <label for="">Image:</label>
-          <input type="file" name="Image" class="form-control-file" accept="image/*" multiple id="image" required>
-        </div>
+        <h2 class='text-center'>Add Product</h2>
+        <form
+          id='categoryForm'
+          action='/admin/add-products'
+          method='POST'
+          enctype='multipart/form-data'
+          onsubmit='return validateForm() && confirmSubmit()'
+        >
+          <div class='form-group'>
+            <label for='no'>NO:</label>
+            <input
+              type='number'
+              name='No'
+              class='form-control'
+              id='no'
+              placeholder='Enter the product no:'
+              required
+            />
+            <div class='invalid-feedback'>Please enter a positive number</div>
+          </div>
+          <div class='form-group'>
+            <label for='name'>Name:</label>
+            <input
+              type='text'
+              name='Name'
+              class='form-control'
+              id='name'
+              placeholder='Enter Product Name'
+              required
+            />
+            <div class='invalid-feedback'>Please enter a name with a maximum of
+              25 characters.</div>
+          </div>
+          <div class='form-group'>
+            <label for=''>Description:</label>
+            <textarea
+              name='Description'
+              class='form-control'
+              id='description'
+              rows='3'
+              placeholder='Enter Description'
+              required
+            ></textarea>
+          </div>
+          <div class='form-group'>
+            <label for='category'>Category</label>
+            <select name='Category' class='form-control' required>
+              <option></option>
+              {{#each category}}
+                <option>{{this.Category}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div class='form-group'>
+            <label for=''>Price:</label>
+            <input
+              type='number'
+              name='Price'
+              class='form-control'
+              id='price'
+              placeholder='Enter Price'
+              required
+            />
 
-        <button class="btn btn-success" type="submit">Submit</button>
-      </form>
+            <div class='invalid-feedback'>Please enter a positive number</div>
+          </div>
+          <div class='form-group'>
+            <label for=''>Image:</label>
+            <input
+              type='file'
+              name='Image'
+              class='form-control-file'
+              accept='image/*'
+              multiple
+              id='image'
+              required
+            />
+          </div>
 
-    </div>
-  </section>
+          <button class='btn btn-success' type='submit'>Submit</button>
+        </form>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/js/bootstrap.min.js"></script>
-  <script>
-    function validateForm() {
-      const noInput = document.getElementById('no');
-      const nameInput = document.getElementById('name');
-      const priceInput = document.getElementById('price');
+      </div>
+    </section>
 
-      if (parseInt(noInput.value) < 0) {
-        noInput.classList.add('is-invalid');
-        return false;
-      } else {
-        noInput.classList.remove('is-invalid');
-      }
-
-      if (nameInput.value.length > 25) {
-        nameInput.classList.add('is-invalid');
-        return false;
-      } else {
-        nameInput.classList.remove('is-invalid');
-      }
-
-      if (parseInt(priceInput.value) < 0) {
-        priceInput.classList.add('is-invalid');
-        return false;
-      } else {
-        priceInput.classList.remove('is-invalid');
-      }
-
-      return true;
-    }
-
-    function confirmSubmit() {
-      swal({
-        title: "Confirmation",
-        text: "Are you sure you want to submit the form?",
-        icon: "warning",
-        buttons: ["Cancel", "Yes"],
-        dangerMode: true,
-      }).then((confirm) => {
-        if (confirm) {
-          const form = document.getElementById('categoryForm');
-          form.submit();
-        }
-      });
-
-      return false;
-    }
-  </script>
-</body>
+    <script
+      src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'
+    ></script>
+    <script
+      src='https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/js/bootstrap.min.js'
+    ></script>
+    <script>
+      function validateForm() { const noInput = document.getElementById('no');
+      const nameInput = document.getElementById('name'); const priceInput =
+      document.getElementById('price'); if (parseInt(noInput.value) < 0) {
+      noInput.classList.add('is-invalid'); return false; } else {
+      noInput.classList.remove('is-invalid'); } if (nameInput.value.length > 25)
+      { nameInput.classList.add('is-invalid'); return false; } else {
+      nameInput.classList.remove('is-invalid'); } if (parseInt(priceInput.value)
+      < 0) { priceInput.classList.add('is-invalid'); return false; } else {
+      priceInput.classList.remove('is-invalid'); } return true; } function
+      confirmSubmit() { swal({ title: "Confirmation", text: "Are you sure you
+      want to submit the form?", icon: "warning", buttons: ["Cancel", "Yes"],
+      dangerMode: true, }).then((confirm) => { if (confirm) { const form =
+      document.getElementById('categoryForm'); form.submit(); } }); return
+      false; }
+    </script>
+  </body>
 </html>
-
-
-

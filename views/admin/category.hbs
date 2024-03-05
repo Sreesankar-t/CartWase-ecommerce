@@ -1,104 +1,118 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Category Data</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
-  <style>
-    .card {
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    }
-
-    .table-container {
-      margin-top: 20px; /* Adjust the margin as needed */
-    }
-
-    .pagination-container {
-      margin-top: 20px; /* Adjust the margin as needed */
-      display: flex;
-      justify-content: center;
-    }
-  </style>
-</head>
-<body>
-  <div style="padding-left: 200px;" class="container mt-5">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <h4 class="text-center">Category Data</h4>
-          </div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-12 text-right">
-                <a href="/admin/add-category" class="btn btn-success">Add category</a>
+<html lang='en'>
+  <head>
+    <title>Category Data</title>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <link
+      rel='stylesheet'
+      href='https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css'
+    />
+    <link
+      rel='stylesheet'
+      href='https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css'
+    />
+    <style>
+      .card { box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); } .table-container {
+      margin-top: 20px; /* Adjust the margin as needed */ }
+      .pagination-container { margin-top: 20px; /* Adjust the margin as needed
+      */ display: flex; justify-content: center; }
+    </style>
+  </head>
+  <body>
+    <div style='padding-left: 200px;' class='container mt-5'>
+      <div class='row'>
+        <div class='col-md-12'>
+          <div class='card'>
+            <div class='card-header'>
+              <h4 class='text-center'>Category Data</h4>
+            </div>
+            <div class='card-body'>
+              <div class='row'>
+                <div class='col-md-12 text-right'>
+                  <a href='/admin/add-category' class='btn btn-success'>Add
+                    category</a>
+                </div>
               </div>
-            </div>
 
-            <!-- Category table -->
-            <div class="table-container table-responsive">
-              <table class="table mt-3" id="productsTable">
-                <thead>
-                  <tr>
-                    <th scope="col">-></th>
-                    <th scope="col">-></th>
-                    <th>Category</th>
-                    <th scope="col">Image</th>
-                    <th scope="col">Updates</th>
-                   
-                  </tr>
-                </thead>
-                <tbody>
-                  {{#each category}}
-                  <tr>
-                    <th scope="row">{{this.No}}</th>
-                    <th scope="row">{{this.No}}</th>
-                    <td>{{this.Category}}</td>
-                    {{#each this.photos}}
-                    <td><img style="width: 80px;height: 80px;" src="{{this.fileName}}" alt=""></td>
+              <!-- Category table -->
+              <div class='table-container table-responsive'>
+                <table class='table mt-3' id='productsTable'>
+                  <thead>
+                    <tr>
+                      <th scope='col'>-></th>
+                      <th scope='col'>-></th>
+                      <th>Category</th>
+                      <th scope='col'>Image</th>
+                      <th scope='col'>Updates</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each category}}
+                      <tr>
+                        <th scope='row'>{{this.No}}</th>
+                        <th scope='row'>{{this.No}}</th>
+                        <td>{{this.Category}}</td>
+                        {{#each this.photos}}
+                          <td><img
+                              style='width: 80px;height: 80px;'
+                              src='{{this.fileName}}'
+                              alt=''
+                            /></td>
+                        {{/each}}
+                        <td>
+                          <a
+                            href='/admin/edit-category/{{this._id}}'
+                            class='btn btn-info'
+                          >Edit</a>
+                          {{#if this.isHide}}
+                            <a
+                              href='/admin/unhide-category/{{this._id}}'
+                              class='btn btn-primary'
+                            >Unhide</a>
+                          {{else}}
+                            <a
+                              href='/admin/hide-category/{{this._id}}'
+                              class='btn btn-danger'
+                              onclick="return confirm('Are you want to hide product {{this.Category}}?')"
+                            >Hide</a>
+                          {{/if}}
+                        </td>
+
+                      </tr>
                     {{/each}}
-                    <td>
-                      <a href="/admin/edit-category/{{this._id}}" class="btn btn-info">Edit</a>
-                      {{#if this.isHide}}
-                      <a href="/admin/unhide-category/{{this._id}}" class="btn btn-primary">Unhide</a>
-                      {{else}}
-                      <a href="/admin/hide-category/{{this._id}}" class="btn btn-danger" onclick="return confirm('Are you want to hide product {{this.Category}}?')">Hide</a>
-                      {{/if}}
-                    </td>
-               
-                  </tr>
-                  {{/each}}
-                </tbody>
-              </table>
-            </div>
+                  </tbody>
+                </table>
+              </div>
 
-            <nav aria-label="Page navigation example" class="pagination-container">
-              {{!-- <ul class="pagination justify-content-center">
+              <nav
+                aria-label='Page navigation example'
+                class='pagination-container'
+              >
+                {{! <ul class="pagination justify-content-center">
                 <li class="page-item"><a class="page-link" href="#">Previous</a></li>
                 <li class="page-item"><a class="page-link" href="/admin/category?p=1">1</a></li>
                 <li class="page-item"><a class="page-link" href="/admin/category?p=2">2</a></li>
                 <li class="page-item"><a class="page-link" href="/admin/category?p=3">3</a></li>
                 <li class="page-item"><a class="page-link" href="#">Next</a></li>
-              </ul> --}}
-            </nav>
+              </ul> }}
+              </nav>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
-  <script>
-    $(document).ready(function () {
-      $('#productsTable').DataTable({
-        "dom": '<"top"i>rt<"bottom"flp><"clear">',
-      });
-    });
-  </script>
-</body>
+    <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
+    <script
+      src='https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js'
+    ></script>
+    <script
+      src='https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js'
+    ></script>
+    <script>
+      $(document).ready(function () { $('#productsTable').DataTable({ "dom":
+      '<"top"i>rt<"bottom"flp><"clear">', }); });
+    </script>
+  </body>
 </html>
-

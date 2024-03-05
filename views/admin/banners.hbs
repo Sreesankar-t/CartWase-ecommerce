@@ -1,34 +1,48 @@
-<section style="padding-left: 150px; ;">
-  <div class="container">
-    <div class="row mt-4">
-      <div class="col-md-12">
-        <div class="card">
-          
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-12 text-right">
-                <a href="/admin/addBanner" class="btn btn-success">Add banner</a>
+<section style='padding-left: 150px; ;'>
+  <div class='container'>
+    <div class='row mt-4'>
+      <div class='col-md-12'>
+        <div class='card'>
+
+          <div class='card-body'>
+            <div class='row'>
+              <div class='col-md-12 text-right'>
+                <a href='/admin/addBanner' class='btn btn-success'>Add banner</a>
               </div>
             </div>
 
-            <div class="table-responsive mt-5">
-              <table class="table table-bordered table-hover" id="productsTable">
-                <thead class="thead-dark">
+            <div class='table-responsive mt-5'>
+              <table
+                class='table table-bordered table-hover'
+                id='productsTable'
+              >
+                <thead class='thead-dark'>
                   <tr>
-                    <th scope="col">Banner</th>
-                    <th scope="col">Options</th>
+                    <th scope='col'>Banner</th>
+                    <th scope='col'>Options</th>
                   </tr>
                 </thead>
                 <tbody>
                   {{#each banners}}
-                  <tr>
-                    <td><img style="width: 700px; height: 200px;" src="{{this.photos.[0].fileName}}" alt=""></td>
-                    <td>
-                      <form action="/delete-banner/{{this._id}}" method="POST">
-                        <a href="/admin/delete-banner/{{this._id}}" class="btn btn-danger btn-sm" onclick="return ">Delete</a>
-                      </form>
-                    </td>
-                  </tr>
+                    <tr>
+                      <td><img
+                          style='width: 700px; height: 200px;'
+                          src='{{this.photos.0.fileName}}'
+                          alt=''
+                        /></td>
+                      <td>
+                        <form
+                          action='/delete-banner/{{this._id}}'
+                          method='POST'
+                        >
+                          <a
+                            href='/admin/delete-banner/{{this._id}}'
+                            class='btn btn-danger btn-sm'
+                            onclick='return '
+                          >Delete</a>
+                        </form>
+                      </td>
+                    </tr>
                   {{/each}}
                 </tbody>
               </table>
@@ -41,93 +55,33 @@
 </section>
 
 <style>
-  .container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding-bottom: 2rem;
-  }
-
-  .card {
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  }
-
-  .btn {
-    border-radius: 0;
-  }
-
-  .btn-success {
-    background-color: #28a745;
-    border-color: #28a745;
-  }
-
-  .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-  }
-
-  .btn-danger {
-    background-color: #dc3545;
-    border-color: #dc3545;
-  }
-
-  .table-responsive {
-    border: none;
-  }
-
-  .table {
-    font-size: 14px;
-  }
-
-  .table thead th {
-    font-weight: bold;
-    vertical-align: middle;
-    color: #fff;
-    background-color: #343a40;
-    border-color: #343a40;
-  }
-
-  .table tbody td {
-    vertical-align: middle;
-  }
+  .container { max-width: 1000px; margin: 0 auto; padding-bottom: 2rem; } .card
+  { box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); } .btn { border-radius: 0; }
+  .btn-success { background-color: #28a745; border-color: #28a745; }
+  .btn-primary { background-color: #007bff; border-color: #007bff; } .btn-danger
+  { background-color: #dc3545; border-color: #dc3545; } .table-responsive {
+  border: none; } .table { font-size: 14px; } .table thead th { font-weight:
+  bold; vertical-align: middle; color: #fff; background-color: #343a40;
+  border-color: #343a40; } .table tbody td { vertical-align: middle; }
 </style>
 
 <script>
-  function deleteBanner() {
-    // Place your delete logic here
-    // This function will be called when the user clicks the "Delete" button in the modal
-  }
+  function deleteBanner() { // Place your delete logic here // This function
+  will be called when the user clicks the "Delete" button in the modal }
 </script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+<script
+  src='https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js'
+></script>
 <script>
-  // Add Sweet Alert library to your HTML file before this script
-  
-  // Add an event listener to the "Delete" button
-  const deleteButtons = document.querySelectorAll('.delete-banner');
-  deleteButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
-      e.preventDefault();
-      const bannerId = button.getAttribute('data-banner-id');
-      
-      // Show Sweet Alert confirmation
-      Swal.fire({
-        title: 'Are you sure?',
-        text: 'You are about to delete this banner.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'OK',
-        cancelButtonText: 'Cancel'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // Submit the form
-          const form = document.querySelector(`#delete-banner-form-${bannerId}`);
-          form.submit();
-        }
-      });
-    });
-  });
+  // Add Sweet Alert library to your HTML file before this script // Add an
+  event listener to the "Delete" button const deleteButtons =
+  document.querySelectorAll('.delete-banner'); deleteButtons.forEach(button => {
+  button.addEventListener('click', (e) => { e.preventDefault(); const bannerId =
+  button.getAttribute('data-banner-id'); // Show Sweet Alert confirmation
+  Swal.fire({ title: 'Are you sure?', text: 'You are about to delete this
+  banner.', icon: 'warning', showCancelButton: true, confirmButtonText: 'OK',
+  cancelButtonText: 'Cancel' }).then((result) => { if (result.isConfirmed) { //
+  Submit the form const form =
+  document.querySelector(`#delete-banner-form-${bannerId}`); form.submit(); }
+  }); }); });
 </script>
-
-
-
-
-

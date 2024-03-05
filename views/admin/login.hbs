@@ -1,17 +1,42 @@
-<section class="container mt-5">
-  <div class="wrapper" style="max-width: 400px; margin: 0 auto; ">
-    <div id="formContent" style="background-color: #F5F5F5; padding: 40px; border: 1px solid #D3D3D3;  border-radius: 9px; ">
+<section class='container mt-5'>
+  <div class='wrapper' style='max-width: 400px; margin: 0 auto; '>
+    <div
+      id='formContent'
+      style='background-color: #F5F5F5; padding: 40px; border: 1px solid #D3D3D3;  border-radius: 9px; '
+    >
       <h2 style="color: #333; font-family: 'Open Sans', sans-serif;">Admin Login</h2>
-      <form action="/admin/adminLogin" method="POST" >
+      <form action='/admin/adminLogin' method='POST'>
         {{#if loginErr}}
-        <p class="error" style="color: orangered;">Invalid Username or Password</p>
+          <p class='error' style='color: orangered;'>Invalid Username or
+            Password</p>
         {{/if}}
-        <input type="text" id="login" class="form-control mb-4" name="Email" placeholder="Admin Email" style="font-family: 'Lato', sans-serif;" required>
-        <input type="password" id="password" class="form-control mb-4" name="Password" placeholder="Password" autocomplete="off" style="font-family: 'Lato', sans-serif;" required>
-        <button type="submit" class="btn btn-primary btn-block mb-4" style="background-color: #4F86F7; border: none; font-family: 'Open Sans', sans-serif;">Log In</button>
+        <input
+          type='text'
+          id='login'
+          class='form-control mb-4'
+          name='Email'
+          placeholder='Admin Email'
+          style="font-family: 'Lato', sans-serif;"
+          required
+        />
+        <input
+          type='password'
+          id='password'
+          class='form-control mb-4'
+          name='Password'
+          placeholder='Password'
+          autocomplete='off'
+          style="font-family: 'Lato', sans-serif;"
+          required
+        />
+        <button
+          type='submit'
+          class='btn btn-primary btn-block mb-4'
+          style="background-color: #4F86F7; border: none; font-family: 'Open Sans', sans-serif;"
+        >Log In</button>
       </form>
-      <div class="pt-3">
-        <a href="/login" style="font-family: 'Lato', sans-serif;">I am a user</a>
+      <div class='pt-3'>
+        <a href='/login' style="font-family: 'Lato', sans-serif;">I am a user</a>
       </div>
     </div>
   </div>

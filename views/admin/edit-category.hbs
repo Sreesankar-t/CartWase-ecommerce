@@ -1,65 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Edit Category</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-<body>
-<section style="padding-left: 150px;">
-  <div class="container mt-4">
-    <div class="card ">
-      <div class="card-body">
-        <h2 class="text-center">Edit Category</h2>
+<html lang='en'>
+  <head>
+    <title>Edit Category</title>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <link
+      rel='stylesheet'
+      href='https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css'
+    />
+    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+  </head>
+  <body>
+    <section style='padding-left: 150px;'>
+      <div class='container mt-4'>
+        <div class='card'>
+          <div class='card-body'>
+            <h2 class='text-center'>Edit Category</h2>
 
-        {{#if catError}}
-        <div class="error-bar">
-          <p style="color: orangered" class="error-message"><b>{{catError}}</b></p>
+            {{#if catError}}
+              <div class='error-bar'>
+                <p style='color: orangered' class='error-message'><b
+                  >{{catError}}</b></p>
+              </div>
+            {{/if}}
+
+            <form
+              id='categoryForm'
+              action='/admin/edit-category/{{category._id}}'
+              method='POST'
+              enctype='multipart/form-data'
+            >
+              <div class='form-group'>
+                <label for='category'>Category:</label>
+                <input
+                  style='width: 20rem;'
+                  type='text'
+                  name='Category'
+                  class='form-control'
+                  value='{{category.Category}}'
+                  id='category'
+                  placeholder='Enter Category'
+                />
+              </div>
+              <div class='form-group'>
+                <label for='image'>Image:</label>
+                <img
+                  src='{{this.category.photos.0.fileName}}'
+                  alt=''
+                  style='width: 100px; height:auto'
+                  id='imgView'
+                />
+                <input
+                  type='file'
+                  name='Image'
+                  class='form-control-file'
+                  accept='image/*'
+                  id='image'
+                  onchange='ViewImage(event)'
+                />
+              </div>
+              <button
+                type='submit'
+                onclick='confirmEdit(event)'
+                class='btn btn-success'
+              >Submit</button>
+            </form>
+          </div>
         </div>
-        {{/if}}
-
-        <form id="categoryForm" action="/admin/edit-category/{{category._id}}" method="POST" enctype="multipart/form-data">
-          <div class="form-group">
-            <label for="category">Category:</label>
-            <input style="width: 20rem;" type="text" name="Category" class="form-control" value="{{category.Category}}" id="category" placeholder="Enter Category">
-          </div>
-          <div class="form-group">
-            <label for="image">Image:</label>
-            <img src="{{this.category.photos.[0].fileName}}" alt="" style="width: 100px; height:auto" id="imgView">
-            <input type="file" name="Image" class="form-control-file" accept="image/*" id="image" onchange="ViewImage(event)" >
-          </div>
-          <button type="submit" onclick="confirmEdit(event)" class="btn btn-success">Submit</button>
-        </form>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<script>
-  function ViewImage(event) {
-    document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0]);
-  }
-
-  function confirmEdit(event) {
-    event.preventDefault();
-    Swal.fire({
-      title: 'Confirmation',
-      text: 'Do you want to edit the category?',
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'OK',
-      cancelButtonText: 'Cancel'
-    }).then((result) => {
+    <script>
+      function ViewImage(event) { document.getElementById('imgView').src =
+      URL.createObjectURL(event.target.files[0]); } function confirmEdit(event)
+      { event.preventDefault(); Swal.fire({ title: 'Confirmation', text: 'Do you
+      want to edit the category?', icon: 'question', showCancelButton: true,
+      confirmButtonColor: '#3085d6', cancelButtonColor: '#d33',
+      confirmButtonText: 'OK', cancelButtonText: 'Cancel' }).then((result) => {
       if (result.isConfirmed) {
-        document.getElementById('categoryForm').submit();
-      }
-    });
-  }
-</script>
+      document.getElementById('categoryForm').submit(); } }); }
+    </script>
 
-</body>
+  </body>
 </html>

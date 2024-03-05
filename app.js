@@ -12,6 +12,7 @@ const app = express();
 const   session=require('express-session')
 const nocache=require('nocache')
 const Swal = require('sweetalert2');
+const  PORT = 5001
 
 // view engine setup//
 app.set('views', path.join(__dirname, 'views'));
@@ -80,8 +81,8 @@ handlebars.registerHelper('selectedYearEquals', function (selectedYear, targetYe
   return selectedYear === targetYear ? 'selected' : '';
 });
 
-app.listen(5000, () => {
-  console.log("Port 5000 is running");
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
 
 module.exports = app;
