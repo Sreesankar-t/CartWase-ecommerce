@@ -7,16 +7,16 @@ const otpGenerator = require('otp-generator')
 const nodemailer = require('nodemailer')
 const alert = require('alert')
 const { response, router, render } = require('../app')
+const dotenv = require('dotenv')
+dotenv.config()
 
-var email
-var otp
+let otp
 
 const transporter = nodemailer.createTransport({
-  host: 'smtp.ethereal.email',
-  port: 587,
+  service: 'gmail',
   auth: {
-    user: 'greta10@ethereal.email',
-    pass: 'b436SzurtJKv6jvAzf'
+    user: process.env.EMAIL,
+    pass: process.env.PASS
   }
 })
 
@@ -112,7 +112,7 @@ signuppost = (req, res) => {
       })
 
       const mailOptions = {
-        from: 'greta10@ethereal.email',
+        from: process.env.EMAIL,
         to: Email,
         subject: 'OTP for sign up',
         text: ` Your OTP is ${otp}`
