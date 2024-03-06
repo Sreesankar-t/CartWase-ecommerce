@@ -1,4 +1,3 @@
-<!-- user/view-order-products.hbs -->
 <style>
   .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -34,83 +33,56 @@
   }
 </style>
 
-<div style="padding-top: 150px;" class="container d-flex justify-content-center">
+<div style="padding-top: 150px;" class="container">
   <div class="card">
-    <div   class="card-body">
+    <div class="card-body">
       {{#each products}}
-      <div style="width: 800px;" class="row mb-3">
+      <div class="row mb-3">
         <div class="col-md-2">
-          <img class="card-img-top" style="width: 170px; height: 170px" src="{{this.product.photos.[2].fileName}}" alt="Product Image">
+          <img class="card-img-top img-fluid" src="{{this.product.photos.[2].fileName}}" alt="Product Image">
         </div>
-        <div class="col-md-3 d-flex justify-content-center pt-5">
-          <span class="">Quantity: <b >{{this.quantity}}</b></span>
-         
+        <div class="col-md-3 pt-md-5">
+          <span class="">Quantity: <b>{{this.quantity}}</b></span>
         </div>
-        <div class="col-md-4 d-flex justify-content-center pt-5">
+        <div class="col-md-4 pt-md-5">
           <h5 class="card-title">{{this.product.Name}}</h5>
-  
-</div>
-
-        <div class="col-md-3 d-flex justify-content-center pt-5">
+        </div>
+        <div class="col-md-3 pt-md-5">
           <p class="card-text">Price: {{this.product.Price}}</p>
-         
-
         </div>
       </div>
       <hr>
-      
       {{/each}}
       
-   <div class="container  justify-content-end" >
-   
-   {{!-- Cart Tottal:<h1>{{orders.deliveryDetails.cartAmount}}</h1>
-   <h1>{{orders.deliveryDetails.couponDiscout}}</h1>
-   <h1>{{orders.totalAmount}}</h1> --}}
-{{!--  --}}
-                   <li class="list-group-item border-0 px-0 mb-3">
-        <div class="wallet-container">
-                   
-        <div class="d-flex flex-column">
-          <div class="d-flex justify-content-between">
-            <span><strong>Cart Total:</strong></span>
-            <span>₹<span id="total">{{orders.deliveryDetails.cartAmount}}</span></span>
-          </div>
-          <div class="d-flex justify-content-between">
-            <span><strong>Coupon savings:</strong></span>
-            <span style="color: green;"><span id="discount">-{{orders.deliveryDetails.couponDiscout}}</span></span>
-          </div>
-          <div class="d-flex justify-content-between">
-            <span><strong>Wallet savings:</strong></span>
-            <span style="color: green;"><span id="discount">-{{orders.deliveryDetails.walletAmount}}</span></span>
-          </div>
-         
-          <div class="d-flex justify-content-between mt-2">
-            <span><strong>Order Total:</strong></span>
-            <span>₹<span id="totalPrice">{{orders.totalAmount}}</span></span>
-          </div>
+      <div class="d-flex flex-column justify-content-end">
+        <div class="d-flex justify-content-between">
+          <span><strong>Cart Total:</strong></span>
+          <span>₹<span id="total">{{orders.deliveryDetails.cartAmount}}</span></span>
+        </div>
+        <div class="d-flex justify-content-between">
+          <span><strong>Coupon savings:</strong></span>
+          <span style="color: green;">-{{orders.deliveryDetails.couponDiscout}}</span>
+        </div>
+        <div class="d-flex justify-content-between">
+          <span><strong>Wallet savings:</strong></span>
+          <span style="color: green;">-{{orders.deliveryDetails.walletAmount}}</span>
+        </div>
+        <div class="d-flex justify-content-between">
+          <span><strong>Order Total:</strong></span>
+          <span>₹<span id="totalPrice">{{orders.totalAmount}}</span></span>
         </div>
         <hr>
         <p>payment-method</p>
-         <div class="d-flex justify-content-between">
-              {{#if  (eq  orders.paymentMethod "COD" )}}
-            <span><strong>Cash on Delivery:</strong></span>
-        
-            <span style="color: green;"><span id="discount">₹ {{orders.totalAmount}}</span></span>
-            {{else}}
-                <span><strong>Online:</strong></span>
-                <span style="color: green;"><span id="discount">₹ {{orders.totalAmount}}</span></span>
-              {{/if}}
-          </div>
-      </li>
-                  {{!--  --}}
-</div>
-      
+        <div class="d-flex justify-content-between">
+          {{#if (eq orders.paymentMethod "COD")}}
+          <span><strong>Cash on Delivery:</strong></span>
+          <span style="color: green;">₹ {{orders.totalAmount}}</span>
+          {{else}}
+          <span><strong>Online:</strong></span>
+          <span style="color: green;">₹ {{orders.totalAmount}}</span>
+          {{/if}}
+        </div>
+      </div>
     </div>
   </div>
 </div>
-
-
-
-
-
-

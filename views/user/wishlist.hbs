@@ -34,26 +34,26 @@
 {{else}}
  
 <div style="padding-top: 150px;" class="container">
-   
+
   <div class="card">
-    
+
     <div class="card-body">
         {{#each list.products}}
       <div class="row mb-3">
         <div class="col-md-2">
-          <img class="card-img-top" style="width: 170px; height: 170px" src="{{this.itemphotos.[2].fileName}}" alt="Product Image">
+          <img class="card-img-top img-fluid" src="{{this.itemphotos.[2].fileName}}" alt="Product Image">
         </div>
         <div class="col-md-7">
-          <div style="padding-top: 50px;" class="d-flex flex-column justify-content-center">
-           <div class="d-flex justify-content-center"><h5 class="card-title">{{this.itemName}}</h5></div> 
-           <div class="d-flex justify-content-center"><p class="card-text">Price: {{this.itemPrice}}</p></div>
+          <div class="d-flex flex-column justify-content-center align-items-center">
+           <h5 class="card-title">{{this.itemName}}</h5>
+           <p class="card-text">Price: {{this.itemPrice}}</p>
           </div>
         </div>
-        <div class="col-md-3 d-flex align-items-center">
-          
-             
-            <button type = "button"class="btn btn-outline-warning ml-2"onclick="addToCart('{{this.item}}')">
-              Add to Cart <i class = "fas fa-shopping-cart"></i>
+        <div class="col-md-3 d-flex align-items-center justify-content-center">
+
+
+            <button type="button" class="btn btn-outline-warning ml-2" onclick="addToCart('{{this.item}}')">
+              Add to Cart <i class="fas fa-shopping-cart"></i>
             </button>
           <button type="button" class="btn btn-outline-danger ml-2" onclick="removeProduct('{{../list._id}}', '{{this.item}}')"> <i class="fas fa-trash"></i></button>
         </div>
@@ -63,6 +63,7 @@
     </div>
   </div>
 </div>
+
 
 {{/if}}
 
@@ -140,6 +141,12 @@ function removeProduct(wishId, prodId) {
     }
   }
 
+ @media screen  and (max-width : 674px){
+    
+    .d-flex {
+      justify-content: start;
+    }
+ }
 
 </style>
 
