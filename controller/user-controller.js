@@ -148,8 +148,22 @@ otppost = async (req, res) => {
       Password: Password,
       ConformPassword: ConformPassword
     })
-    res.redirect('/login')
-    alert('account created')
+    // res.redirect('/')
+    
+    userHelpers.doLoginwithOtp({Email :Email}).then(response => {
+      if (response.status) {
+        req.session.user = response.user
+        req.session.user.loggedIn = true
+        res.redirect('/')
+        alert('account created')
+      } else if (response == 1) {
+        req.session.blockError = '! you are blocked !'
+        res.redirect('/login')
+      } else {
+        req.session.loginError = '! invalid username or password !'
+        res.redirect('/login')
+      }
+    })
   } else {
     alert('wrong otp')
     res.redirect('/signup')
